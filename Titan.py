@@ -604,15 +604,37 @@ with st.sidebar:
 
 
 # Custom Theme CSS Style
+# Custom Theme CSS Style
 st.markdown(
     """
     <style>
-    :root { --primary-color: #FFFFFF; }
-    div[data-testid="stChatMessageAvatarAssistant"] { background-color: #FFFFFF !important; color: #000000 !important; }
-    div[data-baseweb="textarea"] { border-color: #FFFFFF !important; }
+    /* 1. This keeps all of your custom background variables safe! */
+    :root {
+        --primary-color: #FFFFFF;
+    }
+    div[data-testid="stChatMessageAvatarAssistant"] {
+        background-color: #FFFFFF !important;
+        color: #000000 !important;
+    }
+    div[data-baseweb="textarea"] {
+        border-color: #FFFFFF !important;
+    }
+
+    /* 2. This safely hides ONLY the elements that link to your source code */
+    #MainMenu, #GithubIcon, .stDeployButton, .stAppDeployButton {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* 3. Safe fix: This targets the sub-buttons without breaking your app background canvas */
+    .viewerBadge_container__1QSob, .styles_viewerBadge__1yB5_, .viewerBadge_link__1S137 {
+        display: none !important;
+    }
     </style>
-    """, 
+    """,
     unsafe_allow_html=True
 )
+
+
 
 #streamlit run c:/Users/Shayaan/Titan.py
