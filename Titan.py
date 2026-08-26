@@ -356,7 +356,7 @@ if user_text := st.chat_input("Talk to Titan"):
             "Are you working through a tough fraction derivative right now?"
     )
 
-        elif any(word in user_words for word in ["plus", "minus", "times", "divide"]):
+        elif any(word in user_words for word in ["plus", "minus", "times", "divided"]):
              try:
                 math_phrase = cleaned_input
                 for word,symbol in Math_words.items():
