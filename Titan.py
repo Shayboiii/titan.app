@@ -1,29 +1,40 @@
 import streamlit as st 
 import random
 import math
+import sympy as sp
+import numpy as np
+import pandas as pd
 
 st.set_page_config(page_title="Titan.com") 
 st.title("Titan")
 st.header("Helps with Math,Mental health and Fitness")
 
 #Lists!
-Healthy_food = ["Hummus","Apple","Banana","Orange","Carrot","Salad"]
-Sad_words = ["crying", "hurt", "depressed", "glum", "upset", "dull", "grime", "moody", "sorrowful","heartbroken", "miserable", "gloomy", "unhappy", "hopeless", "weeping","exhausted", "drained", "weary", "heavy", "broken", "worthless", "useless"]
-Happy_words = ["happy", "overjoyed", "delighted", "elated", "joyful","blissful","gleeful","jubilant","cheerful", "sunny", "radiant", "beaming", "glowing", "joyous", "lighthearted", "carefree", "bouncy", "peppy", "perky", "playful", "content", "satisfied", "pleased", "gratified", "good-natured", "thrilled", "stoked", "pumped","charmed"]
-Excited_words = ["enthusiastic", "eager", "animated", "spirited", "lively", "vibrant", "energetic", "exuberant", "passionate", "zealous", "dynamic", "fired up", "ecstatic", "euphoric", "rhapsodic", "frenzied", "electric", "unstoppable", "triumphant", "victorious"]
-Stressed_words = ["stressed", "overwhelmed", "anxious", "panicking", "worried", "pressured", "panicked", "scared", "afraid", "nervous"]
-Excited_experiences = ["roller coaster", "theme park", "going to", "beach", "swimming", "pool", "trip", "birthday", "house", "party"]
-Fitness_words = ["workout", "exercise", "gym", "run", "fitness", "cardio", "lifting", "training"]
-Exercises = [
+Healthy_food = np.array(["Hummus","Apple","Banana","Orange","Carrot","Salad"])
+Sad_words = np.array(["crying", "hurt", "depressed", "glum", "upset", "dull", "grime", "moody", "sorrowful","heartbroken", "miserable", "gloomy", "unhappy", "hopeless", "weeping","exhausted", "drained", "weary", "heavy", "broken", "worthless", "useless"])
+Happy_words = np.array(["happy", "overjoyed", "delighted", "elated", "joyful","blissful","gleeful","jubilant","cheerful", "sunny", "radiant", "beaming", "glowing", "joyous", "lighthearted", "carefree", "bouncy", "peppy", "perky", "playful", "content", "satisfied", "pleased", "gratified", "good-natured", "thrilled", "stoked", "pumped","charmed"])
+Excited_words = np.array(["enthusiastic", "eager", "animated", "spirited", "lively", "vibrant", "energetic", "exuberant", "passionate", "zealous", "dynamic", "fired up", "ecstatic", "euphoric", "rhapsodic", "frenzied", "electric", "unstoppable", "triumphant", "victorious"])
+Stressed_words = np.array(["stressed", "overwhelmed", "anxious", "panicking", "worried", "pressured", "panicked", "scared", "afraid", "nervous"])
+Excited_experiences = np.array(["roller coaster", "theme park", "going to", "beach", "swimming", "pool", "trip", "birthday", "house", "party"])
+Fitness_words = np.array(["workout", "exercise", "gym", "run", "fitness", "cardio", "lifting", "training"])
+Exercises = np.array([
     "15 Jumping Jacks, 10 Bodyweight Squats, and a 20-second Plank! It gets your blood flowing and boosts your mood instantly.",
     "10 Push-ups, 15 Lunges, and 30 seconds of High Knees! Perfect for building strength right in your room.",
     "5 Burpees, 10 Sit-ups, and a 30-second Wall Sit! This one burns energy fast and builds endurance."
-]
-Stretches = [
+])
+Stretches = np.array([
     "The 30-Second Quad Stretch: Stand on one leg, grab your other ankle behind you, and pull it gently toward your glutes. Great for recovery!",
     "The Shoulder Opener: Interlace your fingers behind your back and gently straighten your arms to expand your chest. Takes away all that homework typing tension!",
     "The Cobra Stretch: Lie on your stomach and push your upper body up with your hands while keeping your hips flat. Perfect for relieving back stiffness."
-]
+])
+
+Math_words = {
+    "plus":"+",
+    "minus":"-",
+    "equals":"=",
+    "times":"*",
+    "divided":"/"
+}
 
 if "last_question" not in st.session_state:
     st.session_state.last_question = ""
@@ -46,6 +57,14 @@ if user_text := st.chat_input("Talk to Titan"):
     # Display the user's message right now
     with st.chat_message("user"):
         st.write(user_text)
+
+# Clean out common math punctuation and split into individual words
+    cleaned_input = user_text.lower().replace("?", "").replace("!", "").replace(",", "")
+    user_words = cleaned_input.split()
+    # Convert the user's words list into a NumPy array
+    user_words_array = np.array(user_words)
+
+
     
     # Save the user's message to the notebook
     st.session_state.messages.append({"role": "user", "content": user_text})
@@ -54,13 +73,13 @@ if user_text := st.chat_input("Talk to Titan"):
 
     # Chat logic
     with st.chat_message("assistant"):
-        if any(word in user_text.lower() for word in Stressed_words):
+        if np.isin(user_words_array, Stressed_words).any():
             response = "Take a break and settle down it should help."
 
-        elif "good" in user_text.lower():
+        elif "good" in user_words:
             response = "That is Magnificent!"
 
-        elif "hungry" in user_text.lower():
+        elif "hungry" in user_words:
             snack = random.choice(Healthy_food)
     
     # Macro facts lookup logic
@@ -80,41 +99,41 @@ if user_text := st.chat_input("Talk to Titan"):
     )
 
 
-        elif "tired" in user_text.lower():
+        elif "tired" in user_words:
             response = "Go to sleep don't use a phone 30 minutes before bed time."
 
-        elif any(word in user_text.lower() for word in Sad_words) or "sad" in user_text.lower():
+        elif np.isin(user_words_array, Sad_words).any():
             response = "I hear you, and it is completely okay if you don't have the energy for much right now. We don't have to fix anything today I'm just here if you need a quiet space to process things."
 
-        elif any(word in user_text.lower() for word in Happy_words) or "great" in user_text.lower():
+        elif np.isin(user_words_array, Happy_words).any():
             response = "That is Great especially if your starting out like this you may not need me anymore! or you're fixing your mental health which is great!"
 
-        elif "hi!" in user_text.lower() or "hello" in user_text.lower():
+        elif "hi!" in user_words or "hello" in user_words or "hi" in user_words:
             response = "Hello!"
 
-        elif "ok" in user_text.lower() or "okay" in user_text.lower():
+        elif "ok" in user_words or "okay" in user_words:
             response = "Alright then!"
 
-        elif "wow" in user_text.lower():
+        elif "wow" in user_words:
             response = "Yeah I know right!"
 
-        elif any(word in user_text.lower() for word in Excited_words) or "excited" in user_text.lower():
+        elif np.isin(user_words_array, Excited_words).any():
             response = "That is Amazing! What is making you excited?"
 
-        elif any(word in user_text.lower() for word in Excited_experiences):
+        elif np.isin(user_words_array, Excited_experiences).any():
             response = "Wow Have fun there!"
 
-        elif any(word in user_text.lower() for word in Fitness_words) or "workout" in user_text.lower():
+        elif np.isin(user_words_array,Fitness_words).any() or "workout" in user_words:
             workout_routine = random.choice(Exercises)
             response = (
             "Moving your body releases endorphins, which helps both your physical strength and your mental health!\n\n"
-            f"**Here is your Titan Quick Workout:**\n"
+            f"**Here is your Quick Workout:**\n"
             f"👉 {workout_routine}\n\n"
             "Remember to stay hydrated! Do you want another quick routine or a specific stretch? Type **Yes Strech** if you want to stretch!"
     )
             
         # 2. The explicit stretch routine trigger (Completely safe from accidental "yes" triggers!)
-        elif "stretch" in user_text.lower() or "yes stretch" in user_text.lower() or "cool down" in user_text.lower():
+        elif "stretch" in user_words or "yes stretch" in user_words or "cool down" in user_words:
             routine_stretch = random.choice(Stretches)
             response = (
                 "Let's get limber! Stretching improves flexibility and relaxes your nervous system.\n\n"
@@ -124,7 +143,7 @@ if user_text := st.chat_input("Talk to Titan"):
     )
 
         # 3. Trigger for a second stretch
-        elif "more stretch" in user_text.lower() or "another stretch" in user_text.lower():
+        elif "more stretch" in user_words or "another stretch" in user_words:
             routine_stretch = random.choice(Stretches)
             response = (
                 "You got it! Here is another great movement for your muscles:\n\n"
@@ -132,7 +151,7 @@ if user_text := st.chat_input("Talk to Titan"):
                 "Keep breathing deeply. Let me know what we are tackling next!"
     )
  
-        elif "percent" in user_text.lower() or "discount" in user_text.lower():
+        elif "percent" in user_words or "discount" in user_text.lower():
             response = (
         "I can help you learn percentages! Let's say you want to find 20% of $50.\n\n"
         "Step 1: Turn the percentage into a decimal by moving the dot two times to the left. So, 20% becomes 0.20 \n\n"
@@ -337,6 +356,16 @@ if user_text := st.chat_input("Talk to Titan"):
             "Are you working through a tough fraction derivative right now?"
     )
 
+        elif any(word in user_words for word in ["plus", "minus", "times", "divide"]):
+             try:
+                math_phrase = cleaned_input
+                for word,symbol in Math_words.items():
+                    math_phrase = math_phrase.replace(word,symbol)
+                math_ready = "".join(c for c in math_phrase if c in "0123456789+-*/.()")
+                response = f"I translated your words to math! The answer is {eval(math_ready)}"
+             except: 
+                response = "I couldn't calculate those math words. Check your formatting!"
+                 
         #Normal calculator
         elif any(op in user_text.lower() for op in ["+", "-", "*", "/"]) and "=" not in user_text.lower():
             try:
@@ -603,7 +632,7 @@ with st.sidebar:
 
 
 
-# Custom Theme CSS Style
+
 # Custom Theme CSS Style
 st.markdown(
     """
@@ -635,6 +664,3 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-
-#streamlit run c:/Users/Shayaan/Titan.py
