@@ -3,6 +3,8 @@ import random
 import math
 import sympy as sp
 import numpy as np
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
 
 
 st.set_page_config(page_title="Titan.com") 
