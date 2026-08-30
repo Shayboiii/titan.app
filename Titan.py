@@ -3,7 +3,7 @@ import random
 import math
 import sympy as sp
 import numpy as np
-import pandas as pd
+
 
 st.set_page_config(page_title="Titan.com") 
 st.title("Titan")
