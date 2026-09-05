@@ -171,20 +171,24 @@ if user_text := st.chat_input("Talk to Titan"):
         # Algebra Calculator
         elif "=" in user_text:
             try:
-                # 1. Lowercase and replace text math words with math symbols
-                math_processing = user_text.lower()
-                for word, operator in Math_words.items():
-                    math_processing = math_processing.replace(word, operator)
+                # 1. If they asked a question, isolate the math part after the question mark
+                processing_text = user_text.lower()
+                if "?" in processing_text:
+                    processing_text = processing_text.split("?")[-1] # Grabs just the equation part!
                     
-                # 2. Filter out letters that AREN'T 'x', question marks, and spaces
-                # This keeps numbers, operators, '=', and your variable 'x'
-                clean_math = "".join(c for c in math_processing if c in "0123456789+-*/=()x.")
+                # 2. Replace text math words with math symbols
+                for word, operator in Math_words.items():
+                    processing_text = processing_text.replace(word, operator)
+                    
+                # 3. Filter out any remaining accidental text characters, keeping spaces out
+                clean_math = "".join(c for c in processing_text.strip() if c in "0123456789+-*/=()x. ")
+                # Remove spaces now that words are isolated
+                clean_math = clean_math.replace(" ", "")
                 
-                # 3. Split across the equals sign
+                # 4. Split across the equals sign
                 eq_parts = clean_math.split("=")
                 
                 if len(eq_parts) == 2:
-                    # Bug fix from earlier: access elements using indices [0] and [1]
                     lhs = sp.sympify(eq_parts[0])
                     rhs = sp.sympify(eq_parts[1])
                     
@@ -201,6 +205,7 @@ if user_text := st.chat_input("Talk to Titan"):
                     response = "Titan Solver: Please provide an equation with exactly one '=' sign."
             except Exception as e:
                 response = "Titan Solver: I see an equals sign, but the equation format is too complex. Try something like `2*x + 5 = 15`!"
+
 
 
         elif ("solve for" in user_text.lower() or "equation" in user_text.lower() or "algebra" in user_text.lower()) and "=" not in user_text.lower():
