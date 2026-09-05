@@ -7,6 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 
 
+
 st.set_page_config(page_title="Titan.com") 
 st.title("Titan")
 st.header("Helps with Math,Mental health and Fitness")
@@ -174,9 +175,9 @@ if user_text := st.chat_input("Talk to Titan"):
                 eq_parts = user_text.lower().replace(" ", "").split("=")
                 
                 if len(eq_parts) == 2:
-                    # 2. Parse the left and right sides into SymPy expressions
-                    lhs = sp.sympify(eq_parts)
-                    rhs = sp.sympify(eq_parts)
+                    lhs = sp.sympify(eq_parts[0]) # [0] means the left side of the '=' sign
+                    rhs = sp.sympify(eq_parts[1]) # [1] means the right side of the '=' sign
+
                     
                     # 3. Solve for 'x'
                     x = sp.Symbol('x')
@@ -543,20 +544,20 @@ with st.sidebar:
             else:
                 st.warning("The roots are complex/imaginary (no real number answers).")
                 
-        st.divider()
-        st.subheader("Linear Equation Solver (mx + b = y) 📈")
-        
-        m = st.number_input("Enter slope m:", value=1.0, key="linear_m_9th")
-        b_val = st.number_input("Enter intercept b:", value=0.0, key="linear_b_9th")
-        y = st.number_input("Enter value y:", value=0.0, key="linear_y_9th")
-        
-        if m == 0:
-            if y == b_val:
-                st.success("Infinite solutions! Since m = 0 and y = b, x can be any number.")
+            st.divider()
+            st.subheader("Linear Equation Solver (mx + b = y) 📈")
+            
+            m = st.number_input("Enter slope m:", value=1.0, key="linear_m_9th")
+            b_val = st.number_input("Enter intercept b:", value=0.0, key="linear_b_9th")
+            y = st.number_input("Enter value y:", value=0.0, key="linear_y_9th")
+            
+            if m == 0:
+                if y == b_val:
+                    st.success("Infinite solutions! Since m = 0 and y = b, x can be any number.")
+                else:
+                    st.error("No solution! A slope of 0 cannot reach that y value.")
             else:
-                st.error("No solution! A slope of 0 cannot reach that y value.")
-        else:
-            x_answer = (y - b_val) / m
+                x_answer = (y - b_val) / m
             st.success(f"Solved for x: x = **{x_answer:.2f}**")
  
     elif grade == "10th Grade (Geometry)":
@@ -673,4 +674,5 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
