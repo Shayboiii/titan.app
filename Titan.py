@@ -171,30 +171,33 @@ if user_text := st.chat_input("Talk to Titan"):
         # Algebra Calculator
         elif "=" in user_text:
             try:
-                # 1. If they asked a question, isolate the math part after the question mark
+                # 1. Isolate text after question mark if present
                 processing_text = user_text.lower()
                 if "?" in processing_text:
-                    processing_text = processing_text.split("?")[-1] # Grabs just the equation part!
+                    processing_text = processing_text.split("?")[-1]
                     
-                # 2. Replace text math words with math symbols
+                # 2. Swap word operators out
                 for word, operator in Math_words.items():
                     processing_text = processing_text.replace(word, operator)
                     
-                # 3. Filter out any remaining accidental text characters, keeping spaces out
+                # 3. Filter down to strictly math symbols and letters
                 clean_math = "".join(c for c in processing_text.strip() if c in "0123456789+-*/=()x. ")
-                # Remove spaces now that words are isolated
                 clean_math = clean_math.replace(" ", "")
                 
-                # 4. Split across the equals sign
+                # 4. Split across equals sign
                 eq_parts = clean_math.split("=")
                 
                 if len(eq_parts) == 2:
-                    lhs = sp.sympify(eq_parts[0])
-                    rhs = sp.sympify(eq_parts[1])
+                    # Force parsing as pure string expressions to avoid type bugs
+                    lhs = sp.sympify(str(eq_parts[0]))
+                    rhs = sp.sympify(str(eq_parts[1]))
                     
-                    # Solve for 'x'
+                    # Explicitly define variable x
                     x = sp.Symbol('x')
-                    solutions = sp.solve(lhs - rhs, x)
+                    
+                    # Formulate the equation cleanly for SymPy: lhs - rhs = 0
+                    equation_expr = lhs - rhs
+                    solutions = sp.solve(equation_expr, x)
                     
                     if solutions:
                         ans_str = ", ".join([str(sol) for sol in solutions])
@@ -204,7 +207,8 @@ if user_text := st.chat_input("Talk to Titan"):
                 else:
                     response = "Titan Solver: Please provide an equation with exactly one '=' sign."
             except Exception as e:
-                response = "Titan Solver: I see an equals sign, but the equation format is too complex. Try something like `2*x + 5 = 15`!"
+                response = f"Titan Solver: Error parsing expression. Try typing simply `x - 9 = 87`!"
+
 
 
 
