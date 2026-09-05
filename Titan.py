@@ -171,30 +171,37 @@ if user_text := st.chat_input("Talk to Titan"):
         # Algebra Calculator
         elif "=" in user_text:
             try:
-                # 1. Standardize and split the equation across the equals sign
-                eq_parts = user_text.lower().replace(" ", "").split("=")
+                # 1. Lowercase and replace text math words with math symbols
+                math_processing = user_text.lower()
+                for word, operator in Math_words.items():
+                    math_processing = math_processing.replace(word, operator)
+                    
+                # 2. Filter out letters that AREN'T 'x', question marks, and spaces
+                # This keeps numbers, operators, '=', and your variable 'x'
+                clean_math = "".join(c for c in math_processing if c in "0123456789+-*/=()x.")
+                
+                # 3. Split across the equals sign
+                eq_parts = clean_math.split("=")
                 
                 if len(eq_parts) == 2:
-                    lhs = sp.sympify(eq_parts[0]) # [0] means the left side of the '=' sign
-                    rhs = sp.sympify(eq_parts[1]) # [1] means the right side of the '=' sign
-
+                    # Bug fix from earlier: access elements using indices [0] and [1]
+                    lhs = sp.sympify(eq_parts[0])
+                    rhs = sp.sympify(eq_parts[1])
                     
-                    # 3. Solve for 'x'
+                    # Solve for 'x'
                     x = sp.Symbol('x')
                     solutions = sp.solve(lhs - rhs, x)
                     
                     if solutions:
-                        # Format answers cleanly (joining multiple solutions if it's quadratic)
                         ans_str = ", ".join([str(sol) for sol in solutions])
                         response = f"Titan Solver: I solved it using SymPy! **x = {ans_str}**"
                     else:
                         response = "Titan Solver: I processed the equation, but found no real solutions for x."
                 else:
-                    response = "Titan Solver: Please provide an equation with exactly one expression on each side of the '=' sign."
-                    
+                    response = "Titan Solver: Please provide an equation with exactly one '=' sign."
             except Exception as e:
-                # This fallback ensures 'response' is ALWAYS defined, preventing app crashes
                 response = "Titan Solver: I see an equals sign, but the equation format is too complex. Try something like `2*x + 5 = 15`!"
+
 
         elif ("solve for" in user_text.lower() or "equation" in user_text.lower() or "algebra" in user_text.lower()) and "=" not in user_text.lower():
             response = (
