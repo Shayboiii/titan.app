@@ -6,6 +6,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier as kn
+from sklearn.model_selection import train_test_split 
 
 
 st.set_page_config(page_title="Titan.com") 
@@ -38,6 +39,36 @@ Math_words = {
     "times":"*",
     "divided":"/"
 }
+
+
+
+def train_titan():
+
+    # X which is equal to traing sentences for titan
+    training_sentences = np.array([
+    # Examples of Sadness
+    "I am so sad",
+    "I feel completely down and hopeless",
+    "I am so drained",
+
+
+    # Examples of Stress
+    "I have so much homework and i feel overwhelmed",
+    "I am panicking i didn't study for this exam",
+    "I have so much work to do i am so overwhelmed",
+
+   # Examples of Joy
+   "Today was amazing and I feel energized",
+    "I am so cheerful and glad to be here"
+
+    ])
+
+    # Y which are equal to labels 
+    labels = np.array(["sad", "sad", "sad", "stress", "stress", "stress", "happy", "happy"])
+
+
+
+
 
 if "last_question" not in st.session_state:
     st.session_state.last_question = ""
