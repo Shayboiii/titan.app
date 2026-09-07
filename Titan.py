@@ -5,7 +5,7 @@ import sympy as sp
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-
+from sklearn.neighbors import KNeighborsClassifier as kn
 
 
 st.set_page_config(page_title="Titan.com") 
