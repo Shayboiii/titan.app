@@ -420,22 +420,27 @@ if user_text := st.chat_input("Talk to Titan"):
             "- **What's below squared**: The bottom equation raised to the power of 2\n\n"
             "Are you working through a tough fraction derivative right now?"
     )
-        # Use NLTK tokens directly to see if any word intersects with your math keys
-        if any(word in Math_words for word in user_words):
+        elif any(word in user_words for word in ["plus", "minus", "times", "divided"]):
             try:
-                # Build a clean math phrase using your NLTK tokens list
-                # This replaces words like 'plus' with '+' on the fly
-                math_tokens = [Math_words.get(word, word) for word in user_words]
-                math_phrase = "".join(math_tokens)
+                # 1. Clean the incoming text string directly
+                math_phrase = user_text.lower().replace("?", "").replace("!", "")
                 
-                # Strip out anything that isn't a safe math character
+                # 2. Swap out words for standard mathematical operator symbols
+                for word, symbol in Math_words.items():
+                    math_phrase = math_phrase.replace(word, symbol)
+                    
+                # 3. Filter down strictly to safe, clean math characters
                 math_ready = "".join(c for c in math_phrase if c in "0123456789+-*/.() ")
-                math_ready = math_ready.replace(" ", "")
+                math_ready = math_ready.replace(" ", "")  # Strip out empty spaces
                 
+                # 4. Use python's evaluation engine to calculate the string formula
                 answer = eval(math_ready)
-                response = f"Titan : Translated NLTK tokens! **{math_ready} = {answer}**"
+                response = f"Titan Word Solver: I translated your words to math! **{math_ready} = {answer}**"
             except ZeroDivisionError:
-                response = "Titan : You can't divide by zero!"
+                response = "Titan Word Solver: You can't divide by zero! That would break the universe."
+            except Exception as e: 
+                response = "Titan Word Solver: I couldn't calculate those math words. Check your formatting! Example: '5 plus 12'"
+
 
 
                  
