@@ -1,3 +1,5 @@
+from xml.parsers.expat import model
+
 import streamlit as st 
 import random
 import math
@@ -53,39 +55,136 @@ Math_words = {
 
 
 def train_titan():
-    # Train the model once when the app loads so 'vectorizer' and 'model' are ready to use
+    # 1. Define X (Your massive 120-sentence training dataset)
     X_train = np.array([
-        # Sadness
-        "I am so sad",
-        "I feel completely down and hopeless",
-        "I am so drained",
-        "I can't stop crying",
+        # === SADNESS (30 Sentences) ===
+        "I am so sad", "I feel completely down and hopeless", "I am so drained", "I can't stop crying",
         "I'm staring at a dinner table set for two, realizing nobody else is coming home",
         "I'm packing up cardboard moving boxes in a house that used to feel so warm",
         "I'm sitting alone in a quiet room just watching the rain beat against the glass",
-        
-        # Stress / Anxiety
+        "It feels like a dark cloud is constantly hanging over my head and won't leave.",
+        "I am so incredibly lonely and it feels like nobody cares about me.",
+        "Nothing I do seems to matter anymore and I just want to stay in bed.",
+        "I miss the old days so much it physically hurts to think about them.",
+        "I feel completely invisible to everyone around me like I don't exist.",
+        "My heart just feels heavy and I don't have the energy to smile today.",
+        "It feels like everything beautiful in my life is slowly slipping away.",
+        "I am just going through the motions but inside I feel totally empty.",
+        "Every single thing reminds me of what I lost and it breaks me down.",
+        "I feel like a total failure and like I disappoint everyone in my life.",
+        "The silence in this empty apartment is completely deafening right now.",
+        "I am so tired of putting on a fake happy face when I am falling apart.",
+        "It feels like nobody understands the pain I am carrying around inside.",
+        "I looked at old text messages and just started weeping at my desk.",
+        "I feel so worthless and like things will never get better for me.",
+        "My motivation is entirely gone and everything feels utterly pointless.",
+        "I am so homesick and I just want to go back to where things made sense.",
+        "It feels like everyone has moved on with their lives except for me.",
+        "I am drowning in my own thoughts and I don't know how to surface.",
+        "Another long day has passed and I still feel completely miserable.",
+        "I feel so detached from the world around me like a ghost walking by.",
+        "The future looks completely bleak and I have zero hope left in me.",
+        "I just want to close my eyes and disappear for a little while.",
+
+        # === STRESS / ANXIETY (30 Sentences) ===
         "I have so much homework and i feel overwhelmed", "I am panicking i didn't study for this exam", 
         "I have so much work to do i am so overwhelmed", "I feel so anxious and scared about tomorrow",
-        
-        # Joy
+        "My heart is racing so fast right now and I cannot calm down.",
+        "I have a massive presentation tomorrow and my stomach is turning into knots.",
+        "There are too many deadlines piling up and I am completely running out of time.",
+        "I feel so pressured by everyone expectations of me it is suffocating.",
+        "My mind will not stop overthinking every single little thing I said today.",
+        "I am panicking because I feel like I am falling behind in all my classes.",
+        "I can feel a panic attack coming on and my chest feels incredibly tight.",
+        "I have so much on my plate right now that I honestly can barely breathe.",
+        "I am terrified of failing this class and ruining my whole future.",
+        "The stress is keeping me awake at night and I cannot get any sleep.",
+        "I am completely burning out from this exhausting schedule every week.",
+        "Every little noise is making me jumpy and nervous today I am a wreck.",
+        "I have to make a huge life decision soon and it is making me paranoid.",
+        "I feel so restless and uneasy like something terrible is about to happen.",
+        "My hands are shaking because I am so incredibly worried about the results.",
+        "I am drowning in responsibilities and nobody is helping me clear them.",
+        "The constant pressure to succeed is driving me completely crazy.",
+        "I am overanalyzing everything and convincing myself that everything will fail.",
+        "I feel so trapped by my schedule I don't even have five minutes to relax.",
+        "My anxiety is through the roof today and I don't even know why.",
+        "I am completely overwhelmed by all these emails and notifications.",
+        "I keep sweating and pacing around the room because I am so stressed.",
+        "I feel like I am walking on eggshells around everyone right now.",
+        "The workload is absolutely brutal and I am totally cracking under pressure.",
+        "I am so dizzy from stress I just need all of this to stop right now.",
+        "My brain feels completely fried from studying non stop for twelve hours.",
+
+        # === JOY / HAPPY (30 Sentences) ===
         "Today was amazing and I feel energized", "I am so cheerful and glad to be here", 
         "Today I ate pizza I am so happy", "I am so excited and stoked for this trip",
+        "I feel so elegant and wonderful today",
+        "The warm morning sun felt incredible as it broke through the trees",
+        "Finding a forgotten twenty-dollar bill in your pocket is an amazing feeling.",
+        "The smell of freshly brewed coffee filled the entire kitchen.",
+        "Watching a beautiful sunset brings a sense of pure peace.",
+        "A perfect afternoon is riding a bicycle down a quiet path.",
+        "Biting into a warm, gooey chocolate chip cookie always hits the spot.",
+        "The sound of rain outside makes staying cozy indoors feel wonderful.",
+        "Waking up and realizing you still have hours left to sleep is pure bliss.",
+        "A crisp autumn breeze makes walking through the neighborhood delightful.",
+        "Watching a playful cat chase a laser pointer brings instant amusement.",
+        "I just passed my hardest final exam and I am absolutely over the moon.",
+        "Lifting weights at the gym today made me feel so powerful and confident.",
+        "I got the job offer I wanted and I am celebrating with my family tonight.",
+        "Hearing my favorite song come on the radio completely made my day.",
+        "I am laughing so hard with my best friends that my stomach hurts.",
+        "The ocean waves crashing against my feet felt so incredibly relaxing.",
+        "I am so proud of how far I have come and how much I have grown.",
+        "Getting a warm hug from someone you love is the best feeling ever.",
+        "The flowers are blooming outside and the entire world looks so beautiful.",
+        "I finally finished my coding project and it works flawlessly I am thrilled.",
+        "Walking into a beautifully clean room brings me so much happiness.",
+        "I am so grateful for all the wonderful people in my life right now.",
+        "Riding a roller coaster today was an absolute adrenaline rush of fun.",
+        "I feel so motivated, inspired, and ready to take on the whole world.",
+        "Everything is working out perfectly and I am filled with pure joy.",
 
-        # Anger (Your new category!)
-        "I am so angry right now",
-        "I feel completely furious and annoyed",
-        "I am just so mad and frustrated"
+        # === ANGER (30 Sentences) ===
+        "I am so angry right now", "I feel completely furious and annoyed", "I am just so mad and frustrated",
+        "It makes me so mad when people constantly cut me off when I am talking.",
+        "I am completely sick and tired of being treated like a doormat by everyone.",
+        "They lied directly to my face and I am absolutely raging with anger.",
+        "I worked so hard on this project and someone else took all the credit.",
+        "I am losing my temper because this stupid software keeps crashing on me.",
+        "It is incredibly unfair how they treated me and I will not stand for it.",
+        "I want to punch a wall right now because I am so incredibly frustrated.",
+        "Stop insulting my intelligence and back off away from me right now.",
+        "I am absolutely boiling with rage after reading that mean text message.",
+        "They completely broke my trust and I am furious that I ever trusted them.",
+        "It drives me insane when people don't show up on time and waste my day.",
+        "I am so annoyed by this loud noise outside I can't even think straight.",
+        "I can feel my blood boiling and I am about to lose my mind on someone.",
+        "They completely ruined my plans and didn't even bother to say sorry.",
+        "I am so sick of people making stupid excuses for their lazy behavior.",
+        "Don't you dare talk down to me like that ever again I am warning you.",
+        "I am completely fed up with this broken system it makes me so mad.",
+        "They treated my friend terribly and it makes me want to scream with rage.",
+        "I am so irritated by your arrogant attitude just leave me alone.",
+        "This is the worst customer service ever and I am completely furious.",
+        "I am screaming into my pillow right now because I am so incredibly mad.",
+        "It makes me so angry when people steal my things without asking first.",
+        "I am absolutely done tolerating this disrespect from you we are finished.",
+        "My heart is pounding with pure rage and I cannot calm myself down.",
+        "They completely ignored my warnings and now everything is ruined I am furious.",
+        "I hate being micromanaged by people who don't even know how to do the job.",
+        "That was incredibly rude and disrespectful and I am totally outraged.",
+        "I am so incredibly ticked off by this entire situation right now."
     ])
 
-    # 2. Update y to match the exact order and count of the sentences above!
-    y_train = np.array([
-        "sad", "sad", "sad", "sad","sad", "sad", "sad",
-        "stress", "stress", "stress", "stress",
-        "happy", "happy", "happy", "happy",
-        "anger", "anger", "anger"
-    ])
-
+    # 2. Balanced y labels (Exactly 120 total items matching X_train)
+    y_train = np.array(
+        ["sad"] * 30 + 
+        ["stress"] * 30 + 
+        ["happy"] * 30 + 
+        ["anger"] * 30
+    )
 
     # 3. Vectorize and train the model
     vectorizer = TfidfVectorizer()
@@ -96,9 +195,8 @@ def train_titan():
     
     return vectorizer, model
 
-# Call the function here to create the variables for your chatbot to use
 vectorizer, model = train_titan()
-  
+
    
 if "last_question" not in st.session_state:
     st.session_state.last_question = ""
