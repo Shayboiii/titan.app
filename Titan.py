@@ -23,6 +23,12 @@ Excited_words = np.array(["enthusiastic", "eager", "animated", "spirited", "live
 Stressed_words = np.array(["stressed", "overwhelmed", "anxious", "panicking", "worried", "pressured", "panicked", "scared", "afraid", "nervous"])
 Excited_experiences = np.array(["roller coaster", "theme park", "going to", "beach", "swimming", "pool", "trip", "birthday", "house", "party"])
 Fitness_words = np.array(["workout", "exercise", "gym", "run", "fitness", "cardio", "lifting", "training"])
+Anger_words = np.array(["angry", "mad", "furious", "annoyed", "pissed", "irritated", "frustrated", "raging"])
+Anxiety_words = np.array(["scared", "terrified", "nervous", "paranoid", "shaking", "fear", "dread", "uneasy"])
+Weight_words = np.array(["fat", "skinny", "weight", "diet", "calories", "shred", "bulk", "obese", "lose", "gain"])
+Hydration_words = np.array(["thirsty", "dehydrated", "water", "drink", "gatorade", "liquid", "parched"])
+
+#Arrays for exerscises and stretches
 Exercises = np.array([
     "15 Jumping Jacks, 10 Bodyweight Squats, and a 20-second Plank! It gets your blood flowing and boosts your mood instantly.",
     "10 Push-ups, 15 Lunges, and 30 seconds of High Knees! Perfect for building strength right in your room.",
@@ -34,6 +40,7 @@ Stretches = np.array([
     "The Cobra Stretch: Lie on your stomach and push your upper body up with your hands while keeping your hips flat. Perfect for relieving back stiffness."
 ])
 
+ # A dictionary for NLP word-to-operator translation in math expressions
 Math_words = {
     "plus":"+",
     "minus":"-",
@@ -41,7 +48,6 @@ Math_words = {
     "times":"*",
     "divided":"/"
 }
-
 
 def train_titan():
     # 1. Define X (Your training sentences)
@@ -146,6 +152,13 @@ if user_text := st.chat_input("Talk to Titan"):
 
         elif any(word in Sad_words for word in user_words):
             response = "I hear you, and it is completely okay if you don't have the energy for much right now. We don't have to fix anything today I'm just here if you need a quiet space to process things."
+
+
+        elif any(word in Anger_words for word in user_words):
+            response = "I can tell you're incredibly frustrated right now. Take a deep breath—I am here to listen if you need to vent it out."
+
+        elif any(word in Weight_words for word in user_words):
+            response = "Fitness is about feeling strong and healthy, not just a number on a scale! Focus on clean eating and consistent movement."
 
 
         elif any(word in Happy_words for word in user_words):
