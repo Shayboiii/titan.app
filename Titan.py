@@ -28,6 +28,8 @@ Anxiety_words = np.array(["scared", "terrified", "nervous", "paranoid", "shaking
 Weight_words = np.array(["fat", "skinny", "weight", "diet", "calories", "shred", "bulk", "obese", "lose", "gain"])
 Hydration_words = np.array(["thirsty", "dehydrated", "water", "drink", "gatorade", "liquid", "parched"])
 
+
+
 #Arrays for exerscises and stretches
 Exercises = np.array([
     "15 Jumping Jacks, 10 Bodyweight Squats, and a 20-second Plank! It gets your blood flowing and boosts your mood instantly.",
@@ -54,7 +56,13 @@ def train_titan():
     # Train the model once when the app loads so 'vectorizer' and 'model' are ready to use
     X_train = np.array([
         # Sadness
-        "I am so sad", "I feel completely down and hopeless", "I am so drained", "I can't stop crying",
+        "I am so sad",
+        "I feel completely down and hopeless",
+        "I am so drained",
+        "I can't stop crying",
+        "I'm staring at a dinner table set for two, realizing nobody else is coming home",
+        "I'm packing up cardboard moving boxes in a house that used to feel so warm",
+        "I'm sitting alone in a quiet room just watching the rain beat against the glass",
         
         # Stress / Anxiety
         "I have so much homework and i feel overwhelmed", "I am panicking i didn't study for this exam", 
@@ -72,7 +80,7 @@ def train_titan():
 
     # 2. Update y to match the exact order and count of the sentences above!
     y_train = np.array([
-        "sad", "sad", "sad", "sad",
+        "sad", "sad", "sad", "sad","sad", "sad", "sad",
         "stress", "stress", "stress", "stress",
         "happy", "happy", "happy", "happy",
         "anger", "anger", "anger"
@@ -497,6 +505,7 @@ if user_text := st.chat_input("Talk to Titan"):
             # 3. Deliver responses based on Titan's prediction
             if predicted_intent == "sad":
                 response = "My machine learning system detects you're feeling down. Do you want to talk about it?"
+
             elif predicted_intent == "stress":
                 response = "It looks like you might be handling a lot of pressure right now. Take it easy!"
             elif predicted_intent == "happy":
