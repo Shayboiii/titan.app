@@ -49,27 +49,35 @@ Math_words = {
     "divided":"/"
 }
 
+
 def train_titan():
-    # 1. Define X (Your training sentences)
+    # Train the model once when the app loads so 'vectorizer' and 'model' are ready to use
     X_train = np.array([
         # Sadness
-        "I am so sad",
-        "I feel completely down and hopeless",
-        "I am so drained",
-
-        # Stress
-        "I have so much homework and i feel overwhelmed",
-        "I am panicking i didn't study for this exam",
-        "I have so much work to do i am so overwhelmed",
-
+        "I am so sad", "I feel completely down and hopeless", "I am so drained", "I can't stop crying",
+        
+        # Stress / Anxiety
+        "I have so much homework and i feel overwhelmed", "I am panicking i didn't study for this exam", 
+        "I have so much work to do i am so overwhelmed", "I feel so anxious and scared about tomorrow",
+        
         # Joy
-        "Today was amazing and I feel energized",
-        "I am so cheerful and glad to be here",
-        "Today I ate pizza I am so happy"
+        "Today was amazing and I feel energized", "I am so cheerful and glad to be here", 
+        "Today I ate pizza I am so happy", "I am so excited and stoked for this trip",
+
+        # Anger (Your new category!)
+        "I am so angry right now",
+        "I feel completely furious and annoyed",
+        "I am just so mad and frustrated"
     ])
 
-    # 2. Define y (Your labels matching the exact order of sentences above)
-    y_train = np.array(["sad", "sad", "sad", "stress", "stress", "stress", "happy", "happy", "happy"])
+    # 2. Update y to match the exact order and count of the sentences above!
+    y_train = np.array([
+        "sad", "sad", "sad", "sad",
+        "stress", "stress", "stress", "stress",
+        "happy", "happy", "happy", "happy",
+        "anger", "anger", "anger"
+    ])
+
 
     # 3. Vectorize and train the model
     vectorizer = TfidfVectorizer()
@@ -80,8 +88,10 @@ def train_titan():
     
     return vectorizer, model
 
-
-
+# Call the function here to create the variables for your chatbot to use
+vectorizer, model = train_titan()
+  
+   
 if "last_question" not in st.session_state:
     st.session_state.last_question = ""
 
@@ -474,8 +484,26 @@ if user_text := st.chat_input("Talk to Titan"):
                 response = "I could not calculate that! Please check your math formatting."
 
         
+        
+        # If none of your exact keyword lists matched, the ML model takes over!
         else:
-            response = "I don't know what your saying!"
+            # 1. Transform the raw user text into numbers
+            user_vec = vectorizer.transform([user_text])
+            
+            # 2. Predict the intent array and extract the string value
+            prediction = model.predict(user_vec)
+            predicted_intent = prediction[0] 
+            
+            # 3. Deliver responses based on Titan's prediction
+            if predicted_intent == "sad":
+                response = "My machine learning system detects you're feeling down. Do you want to talk about it?"
+            elif predicted_intent == "stress":
+                response = "It looks like you might be handling a lot of pressure right now. Take it easy!"
+            elif predicted_intent == "happy":
+                response = "I'm sensing some positive energy from you! Love to see it."
+            else:
+                response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+
 
         #SAVE ASSISTANT RESPONSE
         st.write(response)
