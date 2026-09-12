@@ -167,15 +167,11 @@ def train_titan():
     ])
 
 
-
-        # TEMPORARY COUNTER LINES
-    st.write(f"My text sentences equal: {len(X_train)}")
-
     # 2. Balanced y labels (Exactly 120 total items matching X_train)
     y_train = np.array(
         ["sad"] * 30 + 
         ["stress"] * 30 + 
-        ["happy"] * 30 + 
+        ["happy"] * 16 + 
         ["anger"] * 30
     )
 
