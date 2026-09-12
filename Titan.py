@@ -86,8 +86,10 @@ def train_titan():
         "I just want to close my eyes and disappear for a little while.",
 
         # === STRESS / ANXIETY (30 Sentences) ===
-        "I have so much homework and i feel overwhelmed", "I am panicking i didn't study for this exam", 
-        "I have so much work to do i am so overwhelmed", "I feel so anxious and scared about tomorrow",
+        "I have so much homework and i feel overwhelmed",
+        "I am panicking i didn't study for this exam", 
+        "I have so much work to do i am so overwhelmed",
+        "I feel so anxious and scared about tomorrow",
         "My heart is racing so fast right now and I cannot calm down.",
         "I have a massive presentation tomorrow and my stomach is turning into knots.",
         "There are too many deadlines piling up and I am completely running out of time.",
@@ -117,8 +119,10 @@ def train_titan():
 
 
         # === JOY / HAPPY (30 Sentences) ===
-        "Today was amazing and I feel energized", "I am so cheerful and glad to be here", 
-        "Today I ate pizza I am so happy", "I am so excited and stoked for this trip",
+        "Today was amazing and I feel energized",
+        "I am so cheerful and glad to be here", 
+        "Today I ate pizza I am so happy",
+        "I am so excited and stoked for this trip",
         "I feel so elegant and wonderful today",
         "The warm morning sun felt incredible as it broke through the trees",
         "Finding a forgotten twenty-dollar bill in your pocket is an amazing feeling.",
@@ -144,9 +148,9 @@ def train_titan():
         "I am so grateful for all the wonderful people in my life right now.",
         "Riding a roller coaster today was an absolute adrenaline rush of fun.",
         "I feel so motivated, inspired, and ready to take on the whole world.",
-        "Everything is working out perfectly and I am filled with pure joy.",
+        "The absolute best feeling is waking up early on a weekend, realizing you have nowhere to be, and pulling the warm blankets right back over your shoulders.",
 
-
+        
         # === ANGER (30 Sentences) ===
         "I can feel my blood boiling and I am about to lose my mind on someone.",
         "They completely ruined my plans and didn't even bother to say sorry.",
@@ -163,7 +167,21 @@ def train_titan():
         "They completely ignored my warnings and now everything is ruined I am furious.",
         "I hate being micromanaged by people who don't even know how to do the job.",
         "That was incredibly rude and disrespectful and I am totally outraged.",
-        "I am so incredibly ticked off by this entire situation right now."
+        "I am so incredibly ticked off by this entire situation right now.",
+        "I am so tired of being blamed for mistakes that I didn't even make.",
+        "They completely lied straight to my face and acted like it was nothing.",
+        "It drives me absolutely insane when people refuse to listen to reason.",
+        "I have reached my absolute limit with this nonsense and I am snapping.",
+        "You completely wasted my time today and you don't even seem to care.",
+        "I am so incredibly frustrated by this constant lack of communication.",
+        "Stop interrupting me every single time I try to speak it is infuriating.",
+        "They took full credit for all of my hard work and it makes me sick.",
+        "I am shaking with anger right now because of how unfair this is.",
+        "If you keep pushing my buttons like this there are going to be problems.",
+        "I am totally exhausted from dealing with your toxic drama every single day.",
+        "They broke their promise for the hundredth time and I am completely done.",
+        "It makes my blood boil when people act entitled and treat others like garbage.",
+        "I am so sick of walking on eggshells around your ridiculous temper tantrums.",
     ])
 
 
@@ -171,7 +189,7 @@ def train_titan():
     y_train = np.array(
         ["sad"] * 30 + 
         ["stress"] * 30 + 
-        ["happy"] * 16 + 
+        ["happy"] * 30+
         ["anger"] * 30
     )
 
