@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier as kn
 from sklearn.model_selection import train_test_split 
-import ntlk
+import nltk
 nltk.download('punkt')
 
 
@@ -43,39 +43,36 @@ Math_words = {
 }
 
 
-
 def train_titan():
+    # 1. Define X (Your training sentences)
+    X_train = np.array([
+        # Sadness
+        "I am so sad",
+        "I feel completely down and hopeless",
+        "I am so drained",
 
-    # X which is equal to traing sentences for titan
-    training_sentences = np.array([
-    # Examples of Sadness
-    "I am so sad",
-    "I feel completely down and hopeless",
-    "I am so drained",
+        # Stress
+        "I have so much homework and i feel overwhelmed",
+        "I am panicking i didn't study for this exam",
+        "I have so much work to do i am so overwhelmed",
 
-
-    # Examples of Stress
-    "I have so much homework and i feel overwhelmed",
-    "I am panicking i didn't study for this exam",
-    "I have so much work to do i am so overwhelmed",
-
-   # Examples of Joy
-   "Today was amazing and I feel energized",
-    "I am so cheerful and glad to be here",
-    "Today I ate pizza I am so happy"
-
+        # Joy
+        "Today was amazing and I feel energized",
+        "I am so cheerful and glad to be here",
+        "Today I ate pizza I am so happy"
     ])
 
-    # Y which are equal to labels
-    y = labels
-    labels = np.array(["sad", "sad", "sad", "stress", "stress", "stress", "happy", "happy", "happy"])
+    # 2. Define y (Your labels matching the exact order of sentences above)
+    y_train = np.array(["sad", "sad", "sad", "stress", "stress", "stress", "happy", "happy", "happy"])
 
-
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=21, stratify=y)
-
-
-
+    # 3. Vectorize and train the model
+    vectorizer = TfidfVectorizer()
+    X_train_vec = vectorizer.fit_transform(X_train)
+    
+    model = LogisticRegression()
+    model.fit(X_train_vec, y_train)
+    
+    return vectorizer, model
 
 
 
@@ -102,10 +99,11 @@ if user_text := st.chat_input("Talk to Titan"):
         st.write(user_text)
 
 # Clean out common math punctuation and split into individual words
-    cleaned_input = user_text.lower().replace("?", "").replace("!", "").replace(",", "")
-    user_words = cleaned_input.split()
-    # Convert the user's words list into a NumPy array
+    # Upgrade to standard NLTK Tokenization!
+    # This automatically splits punctuation like 'hi!' into ['hi', '!']
+    user_words = nltk.word_tokenize(user_text.lower())
     user_words_array = np.array(user_words)
+
 
 
     
@@ -422,16 +420,27 @@ if user_text := st.chat_input("Talk to Titan"):
             "- **What's below squared**: The bottom equation raised to the power of 2\n\n"
             "Are you working through a tough fraction derivative right now?"
     )
-
         elif any(word in user_words for word in ["plus", "minus", "times", "divided"]):
-             try:
-                math_phrase = cleaned_input
-                for word,symbol in Math_words.items():
-                    math_phrase = math_phrase.replace(word,symbol)
-                math_ready = "".join(c for c in math_phrase if c in "0123456789+-*/.()")
-                response = f"I translated your words to math! The answer is {eval(math_ready)}"
-             except: 
-                response = "I couldn't calculate those math words. Check your formatting!"
+            try:
+                # 1. Clean the incoming text string directly
+                math_phrase = user_text.lower().replace("?", "").replace("!", "")
+                
+                # 2. Swap out words for standard mathematical operator symbols
+                for word, symbol in Math_words.items():
+                    math_phrase = math_phrase.replace(word, symbol)
+                    
+                # 3. Filter down strictly to safe, clean math characters
+                math_ready = "".join(c for c in math_phrase if c in "0123456789+-*/.() ")
+                math_ready = math_ready.replace(" ", "")  # Strip out empty spaces
+                
+                # 4. Use python's evaluation engine to calculate the string formula
+                answer = eval(math_ready)
+                response = f"Titan Word Solver: I translated your words to math! **{math_ready} = {answer}**"
+            except ZeroDivisionError:
+                response = "Titan Word Solver: You can't divide by zero! That would break the universe."
+            except Exception as e: 
+                response = "Titan Word Solver: I couldn't calculate those math words. Check your formatting! Example: '5 plus 12'"
+
                  
         #Normal calculator
         elif any(op in user_text.lower() for op in ["+", "-", "*", "/"]) and "=" not in user_text.lower():
