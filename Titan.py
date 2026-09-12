@@ -116,6 +116,7 @@ def train_titan():
         "I am so dizzy from stress I just need all of this to stop right now.",
         "My brain feels completely fried from studying non stop for twelve hours.",
 
+
         # === JOY / HAPPY (30 Sentences) ===
         "Today was amazing and I feel energized", "I am so cheerful and glad to be here", 
         "Today I ate pizza I am so happy", "I am so excited and stoked for this trip",
@@ -145,6 +146,7 @@ def train_titan():
         "Riding a roller coaster today was an absolute adrenaline rush of fun.",
         "I feel so motivated, inspired, and ready to take on the whole world.",
         "Everything is working out perfectly and I am filled with pure joy.",
+
 
         # === ANGER (30 Sentences) ===
         "I am so angry right now", "I feel completely furious and annoyed", "I am just so mad and frustrated",
@@ -591,25 +593,27 @@ if user_text := st.chat_input("Talk to Titan"):
 
         
         
-        # If none of your exact keyword lists matched, the ML model takes over!
+                # If none of your hardcoded keyword lists matched, the ML model takes over!
         else:
-            # 1. Transform the raw user text into numbers
+            # 1. Transform the raw user text into numbers using your active vectorizer
             user_vec = vectorizer.transform([user_text])
             
-            # 2. Predict the intent array and extract the string value
+            # 2. Predict the intent
             prediction = model.predict(user_vec)
             predicted_intent = prediction[0] 
             
-            # 3. Deliver responses based on Titan's prediction
+            # 3. Choose the fallback response based on Titan's machine learning guess
             if predicted_intent == "sad":
                 response = "My machine learning system detects you're feeling down. Do you want to talk about it?"
-
             elif predicted_intent == "stress":
                 response = "It looks like you might be handling a lot of pressure right now. Take it easy!"
             elif predicted_intent == "happy":
                 response = "I'm sensing some positive energy from you! Love to see it."
+            elif predicted_intent == "anger":
+                response = "I detect a bit of frustration or anger in your message. Take a deep breath, I'm here to listen."
             else:
                 response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+
 
 
         #SAVE ASSISTANT RESPONSE
