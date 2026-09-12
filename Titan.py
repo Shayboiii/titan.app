@@ -8,7 +8,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier as kn
 from sklearn.model_selection import train_test_split 
 import nltk
-nltk.download('punkt')
+nltk.download('punkt_tab')
 
 
 st.set_page_config(page_title="Titan.com") 
