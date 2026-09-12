@@ -420,26 +420,23 @@ if user_text := st.chat_input("Talk to Titan"):
             "- **What's below squared**: The bottom equation raised to the power of 2\n\n"
             "Are you working through a tough fraction derivative right now?"
     )
-        elif any(word in user_words for word in ["plus", "minus", "times", "divided"]):
+        # Use NLTK tokens directly to see if any word intersects with your math keys
+        if any(word in Math_words for word in user_words):
             try:
-                # 1. Clean the incoming text string directly
-                math_phrase = user_text.lower().replace("?", "").replace("!", "")
+                # Build a clean math phrase using your NLTK tokens list
+                # This replaces words like 'plus' with '+' on the fly
+                math_tokens = [Math_words.get(word, word) for word in user_words]
+                math_phrase = "".join(math_tokens)
                 
-                # 2. Swap out words for standard mathematical operator symbols
-                for word, symbol in Math_words.items():
-                    math_phrase = math_phrase.replace(word, symbol)
-                    
-                # 3. Filter down strictly to safe, clean math characters
+                # Strip out anything that isn't a safe math character
                 math_ready = "".join(c for c in math_phrase if c in "0123456789+-*/.() ")
-                math_ready = math_ready.replace(" ", "")  # Strip out empty spaces
+                math_ready = math_ready.replace(" ", "")
                 
-                # 4. Use python's evaluation engine to calculate the string formula
                 answer = eval(math_ready)
-                response = f"Titan Word Solver: I translated your words to math! **{math_ready} = {answer}**"
+                response = f"Titan : Translated NLTK tokens! **{math_ready} = {answer}**"
             except ZeroDivisionError:
-                response = "Titan Word Solver: You can't divide by zero! That would break the universe."
-            except Exception as e: 
-                response = "Titan Word Solver: I couldn't calculate those math words. Check your formatting! Example: '5 plus 12'"
+                response = "Titan : You can't divide by zero!"
+
 
                  
         #Normal calculator
@@ -450,7 +447,7 @@ if user_text := st.chat_input("Talk to Titan"):
                 # Second, strip out everything except valid numbers and operators
                 math_ready = "".join(c for c in clean_text if c in "0123456789+-*/.()")
                 # Finally, pass the fixed string to eval()
-                response = f"I calculated that for you! The answer is {eval(math_ready)}"
+                response = f"Titan : I calculated that for you! The answer is {eval(math_ready)}"
             except ZeroDivisionError:
                 response = "Nice try, but you can't divide by zero! You'll break the universe."
             except:
