@@ -114,8 +114,9 @@ if user_text := st.chat_input("Talk to Titan"):
 
     # Chat logic
     with st.chat_message("assistant"):
-        if np.isin(user_words_array, Stressed_words).any():
+        if any(word in Stressed_words for word in user_words):
             response = "Take a break and settle down it should help."
+
 
         elif "good" in user_words:
             response = "That is Magnificent!"
@@ -143,10 +144,11 @@ if user_text := st.chat_input("Talk to Titan"):
         elif "tired" in user_words:
             response = "Go to sleep don't use a phone 30 minutes before bed time."
 
-        elif np.isin(user_words_array, Sad_words).any():
+        elif any(word in Sad_words for word in user_words):
             response = "I hear you, and it is completely okay if you don't have the energy for much right now. We don't have to fix anything today I'm just here if you need a quiet space to process things."
 
-        elif np.isin(user_words_array, Happy_words).any():
+
+        elif any(word in Happy_words for word in user_words):
             response = "That is Great especially if your starting out like this you may not need me anymore! or you're fixing your mental health which is great!"
 
         elif "hi!" in user_words or "hello" in user_words or "hi" in user_words:
@@ -158,13 +160,13 @@ if user_text := st.chat_input("Talk to Titan"):
         elif "wow" in user_words:
             response = "Yeah I know right!"
 
-        elif np.isin(user_words_array, Excited_words).any():
+        elif any(word in Excited_words for word in user_words):
             response = "That is Amazing! What is making you excited?"
 
-        elif np.isin(user_words_array, Excited_experiences).any():
+        elif any(word in Excited_experiences for word in user_words):
             response = "Wow Have fun there!"
 
-        elif np.isin(user_words_array,Fitness_words).any() or "workout" in user_words:
+        elif any(word in Fitness_words for word in user_words) or "workout" in user_words:
             workout_routine = random.choice(Exercises)
             response = (
             "Moving your body releases endorphins, which helps both your physical strength and your mental health!\n\n"
