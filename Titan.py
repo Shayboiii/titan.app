@@ -148,19 +148,6 @@ def train_titan():
 
 
         # === ANGER (30 Sentences) ===
-        "I am so angry right now", "I feel completely furious and annoyed", "I am just so mad and frustrated",
-        "It makes me so mad when people constantly cut me off when I am talking.",
-        "I am completely sick and tired of being treated like a doormat by everyone.",
-        "They lied directly to my face and I am absolutely raging with anger.",
-        "I worked so hard on this project and someone else took all the credit.",
-        "I am losing my temper because this stupid software keeps crashing on me.",
-        "It is incredibly unfair how they treated me and I will not stand for it.",
-        "I want to punch a wall right now because I am so incredibly frustrated.",
-        "Stop insulting my intelligence and back off away from me right now.",
-        "I am absolutely boiling with rage after reading that mean text message.",
-        "They completely broke my trust and I am furious that I ever trusted them.",
-        "It drives me insane when people don't show up on time and waste my day.",
-        "I am so annoyed by this loud noise outside I can't even think straight.",
         "I can feel my blood boiling and I am about to lose my mind on someone.",
         "They completely ruined my plans and didn't even bother to say sorry.",
         "I am so sick of people making stupid excuses for their lazy behavior.",
