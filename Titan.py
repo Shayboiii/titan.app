@@ -166,6 +166,11 @@ def train_titan():
         "I am so incredibly ticked off by this entire situation right now."
     ])
 
+
+
+        # TEMPORARY COUNTER LINES
+    st.write(f"My text sentences equal: {len(X_train)}")
+
     # 2. Balanced y labels (Exactly 120 total items matching X_train)
     y_train = np.array(
         ["sad"] * 30 + 
