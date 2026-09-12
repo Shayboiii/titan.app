@@ -7,6 +7,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier as kn
 from sklearn.model_selection import train_test_split 
+import ntlk
+nltk.download('punkt')
 
 
 st.set_page_config(page_title="Titan.com") 
@@ -59,12 +61,19 @@ def train_titan():
 
    # Examples of Joy
    "Today was amazing and I feel energized",
-    "I am so cheerful and glad to be here"
+    "I am so cheerful and glad to be here",
+    "Today I ate pizza I am so happy"
 
     ])
 
-    # Y which are equal to labels 
-    labels = np.array(["sad", "sad", "sad", "stress", "stress", "stress", "happy", "happy"])
+    # Y which are equal to labels
+    y = labels
+    labels = np.array(["sad", "sad", "sad", "stress", "stress", "stress", "happy", "happy", "happy"])
+
+
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=21, stratify=y)
+
 
 
 
