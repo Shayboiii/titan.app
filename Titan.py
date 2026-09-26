@@ -14,7 +14,7 @@ nltk.download('punkt_tab')
 
 st.set_page_config(page_title="Titan.com") 
 st.title("Titan")
-st.header("Helps with Math,Mental health and Fitness")
+st.header("Helps with Math, Mental health and Fitness")
 
 #Lists!
 Healthy_food = np.array(["Hummus","Apple","Banana","Orange","Carrot","Salad"])
