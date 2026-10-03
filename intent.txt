@@ -1,0 +1,133 @@
+# Training sentences for Titan
+
+
+
+# Sentences for Sadness
+I am so sad|sad
+I feel completely down and hopeless|sad
+I am so drained|sad
+I can't stop crying|sad
+I'm staring at a dinner table set for two, realizing nobody else is coming home|sad
+I'm packing up cardboard moving boxes in a house that used to feel so warm|sad
+I'm sitting alone in a quiet room just watching the rain beat against the glass|sad
+It feels like a dark cloud is constantly hanging over my head and won't leave.|sad
+I am so incredibly lonely and it feels like nobody cares about me.|sad
+Nothing I do seems to matter anymore and I just want to stay in bed.|sad
+I miss the old days so much it physically hurts to think about them.|sad
+I feel completely invisible to everyone around me like I don't exist.|sad
+My heart just feels heavy and I don't have the energy to smile today.|sad
+It feels like everything beautiful in my life is slowly slipping away.|sad
+I am just going through the motions but inside I feel totally empty.|sad
+Every single thing reminds me of what I lost and it breaks me down.|sad
+I feel like a total failure and like I disappoint everyone in my life.|sad
+The silence in this empty apartment is completely deafening right now.|sad
+I am so tired of putting on a fake happy face when I am falling apart.|sad
+It feels like nobody understands the pain I am carrying around inside.|sad
+I looked at old text messages and just started weeping at my desk.|sad
+I feel so worthless and like things will never get better for me.|sad
+My motivation is entirely gone and everything feels utterly pointless.|sad
+I am so homesick and I just want to go back to where things made sense.|sad
+It feels like everyone has moved on with their lives except for me.|sad
+I am drowning in my own thoughts and I don't know how to surface.|sad
+Another long day has passed and I still feel completely miserable.|sad
+I feel so detached from the world around me like a ghost walking by.|sad
+The future looks completely bleak and I have zero hope left in me.|sad
+I just want to close my eyes and disappear for a little while.|sad
+
+
+# Sentences for Stress and Anxiety
+I have so much homework and i feel overwhelmed|stress
+I am panicking i didn't study for this exam|stress
+I have so much work to do i am so overwhelmed|stress
+I feel so anxious and scared about tomorrow|stress
+My heart is racing so fast right now and I cannot calm down.|stress
+I have a massive presentation tomorrow and my stomach is turning into knots.|stress
+There are too many deadlines piling up and I am completely running out of time.|stress
+I feel so pressured by everyone expectations of me it is suffocating.|stress
+My mind will not stop overthinking every single little thing I said today.|stress
+I am panicking because I feel like I am falling behind in all my classes.|stress
+I can feel a panic attack coming on and my chest feels incredibly tight.|stress
+I have so much on my plate right now that I honestly can barely breathe.|stress
+I am terrified of failing this class and ruining my whole future.|stress
+The stress is keeping me awake at night and I cannot get any sleep.|stress
+I am completely burning out from this exhausting schedule every week.|stress
+Every little noise is making me jumpy and nervous today I am a wreck.|stress
+I have to make a huge life decision soon and it is making me paranoid.|stress
+I feel so restless and uneasy like something terrible is about to happen.|stress
+My hands are shaking because I am so incredibly worried about the results.|stress
+I am drowning in responsibilities and nobody is helping me clear them.|stress
+The constant pressure to succeed is driving me completely crazy.|stress
+I am overanalyzing everything and convincing myself that everything will fail.|stress
+I feel so trapped by my schedule I don't even have five minutes to relax.|stress
+My anxiety is through the roof today and I don't even know why.|stress
+I am completely overwhelmed by all these emails and notifications.|stress
+I keep sweating and pacing around the room because I am so stressed.|stress
+I feel like I am walking on eggshells around everyone right now.|stress
+The workload is absolutely brutal and I am totally cracking under pressure.|stress
+I am so dizzy from stress I just need all of this to stop right now.|stress
+My brain feels completely fried from studying non stop for twelve hours.|stress
+
+# Sentences for Happiness
+Today was amazing and I feel energized|happy
+I am so cheerful and glad to be here|happy
+Today I ate pizza I am so happy|happy
+I am so excited and stoked for this trip|happy
+I feel so elegant and wonderful today|happy
+The warm morning sun felt incredible as it broke through the trees|happy
+Finding a forgotten twenty-dollar bill in your pocket is an amazing feeling.|happy
+The smell of freshly brewed coffee filled the entire kitchen.|happy
+Watching a beautiful sunset brings a sense of pure peace.|happy
+A perfect afternoon is riding a bicycle down a quiet path.|happy
+Biting into a warm, gooey chocolate chip cookie always hits the spot.|happy
+The sound of rain outside makes staying cozy indoors feel wonderful.|happy
+Waking up and realizing you still have hours left to sleep is pure bliss.|happy
+A crisp autumn breeze makes walking through the neighborhood delightful.|happy
+Watching a playful cat chase a laser pointer brings instant amusement.|happy
+I just passed my hardest final exam and I am absolutely over the moon.|happy
+Lifting weights at the gym today made me feel so powerful and confident.|happy
+I got the job offer I wanted and I am celebrating with my family tonight.|happy
+Hearing my favorite song come on the radio completely made my day.|happy
+I am laughing so hard with my best friends that my stomach hurts.|happy
+The ocean waves crashing against my feet felt so incredibly relaxing.|happy
+I am so proud of how far I have come and how much I have grown.|happy
+Getting a warm hug from someone you love is the best feeling ever.|happy
+The flowers are blooming outside and the entire world looks so beautiful.|happy
+I finally finished my coding project and it works flawlessly I am thrilled.|happy
+Walking into a beautifully clean room brings me so much happiness.|happy
+I am so grateful for all the wonderful people in my life right now.|happy
+Riding a roller coaster today was an absolute adrenaline rush of fun.|happy
+I feel so motivated, inspired, and ready to take on the whole world.|happy
+The absolute best feeling is waking up early on a weekend, realizing you have nowhere to be, and pulling the warm blankets right back over your shoulders.|happy
+
+# Sentences for Anger
+I can feel my blood boiling and I am about to lose my mind on someone.|anger
+They completely ruined my plans and didn't even bother to say sorry.|anger
+I am so sick of people making stupid excuses for their lazy behavior.|anger
+Don't you dare talk down to me like that ever again I am warning you.|anger
+I am completely fed up with this broken system it makes me so mad.|anger
+They treated my friend terribly and it makes me want to scream with rage.|anger
+I am so irritated by your arrogant attitude just leave me alone.|anger
+This is the worst customer service ever and I am completely furious.|anger
+I am screaming into my pillow right now because I am so incredibly mad.|anger
+It makes me so angry when people steal my things without asking first.|anger
+I am absolutely done tolerating this disrespect from you we are finished.|anger
+My heart is pounding with pure rage and I cannot calm myself down.|anger
+They completely ignored my warnings and now everything is ruined I am furious.|anger
+I hate being micromanaged by people who don't even know how to do the job.|anger
+That was incredibly rude and disrespectful and I am totally outraged.|anger
+I am so incredibly ticked off by this entire situation right now.|anger
+I am so tired of being blamed for mistakes that I didn't even make.|anger
+They completely lied straight to my face and acted like it was nothing.|anger
+It drives me absolutely insane when people refuse to listen to reason.|anger
+I have reached my absolute limit with this nonsense and I am snapping.|anger
+You completely wasted my time today and you don't even seem to care.|anger
+I am so incredibly frustrated by this constant lack of communication.|anger
+Stop interrupting me every single time I try to speak it is infuriating.|anger
+They took full credit for all of my hard work and it makes me sick.|anger
+I am shaking with anger right now because of how unfair this is.|anger
+If you keep pushing my buttons like this there are going to be problems.|anger
+I am totally exhausted from dealing with your toxic drama every single day.|anger
+They broke their promise for the hundredth time and I am completely done.|anger
+It makes my blood boil when people act entitled and treat others like garbage.|anger
+I am so sick of walking on eggshells around your ridiculous temper tantrums.|anger
+
