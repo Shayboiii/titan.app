@@ -55,8 +55,8 @@ Math_words = {
 @st.cache_resource
 def train_titan():
     with open("intents.txt", "r", encoding="utf-8") as f:
-    lines = [line.strip() for line in f if line.strip()]
-    data = [line.split("|") for line in lines]
+        lines = [line.strip() for line in f if line.strip()]
+        data = [line.split("|") for line in lines]
 
 
     X_train = np.array([line[0] for line in data])
@@ -451,7 +451,6 @@ if user_text := st.chat_input("Talk to Titan"):
 
 
 
-                 
         #Normal calculator
         elif any(op in user_text.lower() for op in ["+", "-", "*", "/"]) and "=" not in user_text.lower():
             try:
