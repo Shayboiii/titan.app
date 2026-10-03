@@ -54,7 +54,7 @@ Math_words = {
 
 @st.cache_resource
 def train_titan():
-    with open("intents.txt", "r", encoding="utf-8") as f:
+    with open("intent.txt", "r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
         data = [line.split("|") for line in lines]
 
