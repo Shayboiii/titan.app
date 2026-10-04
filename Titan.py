@@ -100,16 +100,10 @@ if user_text := st.chat_input("Talk to Titan"):
     user_words = nltk.word_tokenize(user_text.lower())
     user_words_array = np.array(user_words)
 
-
-
     
-    # Save the user's message to the notebook
     st.session_state.messages.append({"role": "user", "content": user_text})
 
 
-
-if user_text := st.chat_input("Talk to Titan"):
-    # Everything below must match this exact 4-space wall!
     user_vec = vectorizer.transform([user_text.lower()])
     predicted_intent = model.predict(user_vec)[0]
     
@@ -117,9 +111,6 @@ if user_text := st.chat_input("Talk to Titan"):
         if predicted_intent == "stress":
             response = "Take a break and settle down, it should help."
 
-
-        elif predicted_intent == "sad":
-            response = "I hear you, and it is completely okay if you don't have the energy for much right now."
 
         elif predicted_intent == "hungry":
             snack = random.choice(Healthy_food)
@@ -143,9 +134,6 @@ if user_text := st.chat_input("Talk to Titan"):
 
         elif predicted_intent == "tired":
             response = "Go to sleep don't use a phone 30 minutes before bed time."
-
-        elif predicted_intent == "sad":
-            response = "I hear you, and it is completely okay if you don't have the energy for much right now. We don't have to fix anything today I'm just here if you need a quiet space to process things."
 
 
         elif predicted_intent == "anger":
