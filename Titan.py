@@ -108,7 +108,17 @@ if user_text := st.chat_input("Talk to Titan"):
     predicted_intent = model.predict(user_vec)[0]
     
     with st.chat_message("assistant"):
-        if predicted_intent == "stress":
+        if "hi!" in user_words or "hello" in user_words or "hi" in user_words:
+            response = "Hello!"
+
+        elif "ok" in user_words or "okay" in user_words:
+            response = "Alright then!"
+
+        elif "wow" in user_words:
+            response = "Yeah I know right!"
+
+
+        elif predicted_intent == "stress":
             response = "Take a break and settle down, it should help."
 
 
@@ -145,14 +155,6 @@ if user_text := st.chat_input("Talk to Titan"):
         elif predicted_intent == "happy":
             response = "That is Great especially if your starting out like this you may not need me anymore! or you're fixing your mental health which is great!"
 
-        elif "hi!" in user_words or "hello" in user_words or "hi" in user_words:
-            response = "Hello!"
-
-        elif "ok" in user_words or "okay" in user_words:
-            response = "Alright then!"
-
-        elif "wow" in user_words:
-            response = "Yeah I know right!"
 
         elif any(word in Excited_words for word in user_words):
             response = "That is Amazing! What is making you excited?"
