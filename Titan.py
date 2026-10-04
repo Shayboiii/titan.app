@@ -59,8 +59,8 @@ def train_titan():
         data = [line.split("|") for line in lines]
 
 
-    X_train = np.array([line[0] for line in data])
-    y_train = np.array([line[1] for line in data])
+    X_train = np.array([item[0] for item in data if len(item) == 2])
+    y_train = np.array([item[1] for item  in data if len(item) == 2])
 
     # 3. Vectorize and train the model
     vectorizer = TfidfVectorizer()
