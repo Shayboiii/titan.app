@@ -1,4 +1,3 @@
-
 import streamlit as st 
 import random
 import math
@@ -8,7 +7,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier as kn
 import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
 nltk.download('punkt_tab')
+nltk.download('vader_lexicon')
 
 
 st.set_page_config(page_title="Titan.com") 
@@ -64,19 +65,22 @@ def train_titan():
     # 3. Vectorize and train the model
     vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_features=1000, strip_accents='unicode')
     X_train_vec = vectorizer.fit_transform(X_train)
-    
-    model = LogisticRegression()
-    model.fit(X_train_vec, y_train)
 
+    
     model_lr = LogisticRegression()
     model_lr.fit(X_train_vec, y_train)
+    
 
     model_knn = kn(n_neighbors=3)
     model_knn.fit(X_train_vec, y_train)
-    return vectorizer, model_lr, model_knn
+
+    model_ntlk = SentimentIntensityAnalyzer()
+
+    
+    return vectorizer, model_lr, model_knn, model_ntlk
 
 
-vectorizer, model_lr, model_knn = train_titan()
+vectorizer, model_lr, model_knn, model_ntlk = train_titan()
 
    
 if "last_question" not in st.session_state:
@@ -479,6 +483,8 @@ if user_text := st.chat_input("Talk to Titan"):
            
             user_vec = vectorizer.transform([user_text.lower()])
 
+            sentiment_scores = model_ntlk.polarity_scores(user_text)
+            compound_score = sentiment_scores['compound']
             model_knn.predict_proba(user_vec)
             model_lr.predict_proba(user_vec)
             confidence = np.max(model_lr.predict_proba(user_vec)) 
@@ -494,7 +500,7 @@ if user_text := st.chat_input("Talk to Titan"):
                         response = "My machine learning system detects you're feeling down. Do you want to talk about it?"
                     else:
                         predicted_intent=model_lr.predict(user_vec)[0]
-                        if confidence > 0.40:
+                        if confidence > 0.40 or compound_score < -0.5:
                             response = "I didn't quite get that could you type that again?"
                         else:
                             response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
@@ -506,7 +512,7 @@ if user_text := st.chat_input("Talk to Titan"):
                         response = "It looks like you might be handling a lot of pressure right now. Take it easy!"
                     else:
                         predicted_intent=model_lr.predict(user_vec)[0]
-                        if confidence > 0.40:
+                        if confidence > 0.40 or compound_score < -0.5:
                             response = "Please type that again"
                         else:
                             response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
@@ -518,7 +524,7 @@ if user_text := st.chat_input("Talk to Titan"):
                         response = "I'm sensing some positive energy from you! Love to see it."
                     else:
                         predicted_intent=model_lr.predict(user_vec)[0]
-                        if confidence > 0.40:
+                        if confidence > 0.40 or compound_score < -0.5:
                             response = "Please type that again!"
                         else:
                             response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
@@ -530,7 +536,7 @@ if user_text := st.chat_input("Talk to Titan"):
                     response = "I detect a bit of frustration or anger in your message. Take a deep breath, I'm here to listen."
                 else:
                     predicted_intent=model_lr.predict(user_vec)[0]
-                    if confidence > 0.40:
+                    if confidence > 0.40 or compound_score < -0.5:
                         response = "Please type that again"
                     else:
                         response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
@@ -541,7 +547,7 @@ if user_text := st.chat_input("Talk to Titan"):
                     response = "I see you're interested in math! Feel free to ask any math-related questions."
                 else:
                     predicted_intent=model_lr.predict(user_vec)[0]
-                    if confidence > 0.40:
+                    if confidence > 0.40 or compound_score < -0.5:
                         response = "Could you please type that again?"
                     else:
                         response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
@@ -554,7 +560,7 @@ if user_text := st.chat_input("Talk to Titan"):
                     response = "I see you're interested in fitness! Feel free to ask any fitness-related questions."
                 else:
                     predicted_intent=model_lr.predict(user_vec)[0]
-                    if confidence > 0.40:
+                    if confidence > 0.40 or compound_score < -0.5:
                         response = "Could you please type that again?"
                     else: 
                         response ="I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health"
