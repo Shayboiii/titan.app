@@ -7,7 +7,6 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier as kn
-from sklearn.model_selection import train_test_split 
 import nltk
 nltk.download('punkt_tab')
 
@@ -63,15 +62,21 @@ def train_titan():
     y_train = np.array([item[1] for item  in data if len(item) == 2])
 
     # 3. Vectorize and train the model
-    vectorizer = TfidfVectorizer()
+    vectorizer = TfidfVectorizer(ngram_range=(1, 2))
     X_train_vec = vectorizer.fit_transform(X_train)
     
     model = LogisticRegression()
     model.fit(X_train_vec, y_train)
-    
-    return vectorizer, model
 
-vectorizer, model = train_titan()
+    model_lr = LogisticRegression()
+    model_lr.fit(X_train_vec, y_train)
+
+    model_knn = kn(n_neighbors=3)
+    model_knn.fit(X_train_vec, y_train)
+    return vectorizer, model_lr, model_knn
+
+
+vectorizer, model_lr, model_knn = train_titan()
 
    
 if "last_question" not in st.session_state:
@@ -96,16 +101,28 @@ if user_text := st.chat_input("Talk to Titan"):
     with st.chat_message("user"):
         st.write(user_text)
 
-# Clean out common math punctuation and split into individual words
+# Vectorization 
     user_words = nltk.word_tokenize(user_text.lower())
     user_words_array = np.array(user_words)
 
-    
-    st.session_state.messages.append({"role": "user", "content": user_text})
-
 
     user_vec = vectorizer.transform([user_text.lower()])
-    predicted_intent = model.predict(user_vec)[0]
+    intent_lr = model_lr.predict(user_vec)[0]
+    intent_knn = model_knn.predict(user_vec)[0]
+
+
+    if intent_lr == intent_knn:
+        predicted_intent = intent_lr[0]
+    else:
+        lr_probs = model_lr.predict_proba(user_vec)[0]
+        max_lr_prob = np.max(lr_probs)
+        
+        if np.max(lr_probs) > 0.60:
+            predicted_intent = intent_lr[0]
+        else:
+            predicted_intent = intent_knn[0]
+
+
     
     with st.chat_message("assistant"):
         if "hi!" in user_words or "hello" in user_words or "hi" in user_words:
@@ -459,28 +476,95 @@ if user_text := st.chat_input("Talk to Titan"):
         
                 # If none of your hardcoded keyword lists matched, the ML model takes over!
         else:
-            # 1. Transform the raw user text into numbers using your active vectorizer
+           
             user_vec = vectorizer.transform([user_text.lower()])
+
+            model_knn.predict_proba(user_vec)
+            model_lr.predict_proba(user_vec)
+            confidence = np.max(model_lr.predict_proba(user_vec)) 
+
             
-            # 2. Predict the intent
-            prediction = model.predict(user_vec)
+            prediction = model_lr.predict(user_vec)
             predicted_intent = prediction[0] 
             
             # 3. Choose the fallback response based on Titan's machine learning guess
             if predicted_intent == "sad":
-                response = "My machine learning system detects you're feeling down. Do you want to talk about it?"
+                    predicted_intent=model_knn.predict(user_vec)[0]
+                    if confidence > 0.60:
+                        response = "My machine learning system detects you're feeling down. Do you want to talk about it?"
+                    else:
+                        predicted_intent=model_lr.predict(user_vec)[0]
+                        if confidence > 0.40:
+                            response = "I didn't quite get that could you type that again?"
+                        else:
+                            response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+
+
             elif predicted_intent == "stress":
-                response = "It looks like you might be handling a lot of pressure right now. Take it easy!"
+                    predicted_intent=model_knn.predict(user_vec)[0]
+                    if confidence > 0.60:
+                        response = "It looks like you might be handling a lot of pressure right now. Take it easy!"
+                    else:
+                        predicted_intent=model_lr.predict(user_vec)[0]
+                        if confidence > 0.40:
+                            response = "Please type that again"
+                        else:
+                            response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+
+
             elif predicted_intent == "happy":
-                response = "I'm sensing some positive energy from you! Love to see it."
+                    predicted_intent=model_knn.predict(user_vec)[0]
+                    if confidence > 0.60:
+                        response = "I'm sensing some positive energy from you! Love to see it."
+                    else:
+                        predicted_intent=model_lr.predict(user_vec)[0]
+                        if confidence > 0.40:
+                            response = "Please type that again!"
+                        else:
+                            response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+
+
             elif predicted_intent == "anger":
-                response = "I detect a bit of frustration or anger in your message. Take a deep breath, I'm here to listen."
+                predicted_intent=model_knn.predict(user_vec)[0]
+                if confidence > 0.60:
+                    response = "I detect a bit of frustration or anger in your message. Take a deep breath, I'm here to listen."
+                else:
+                    predicted_intent=model_lr.predict(user_vec)[0]
+                    if confidence > 0.40:
+                        response = "Please type that again"
+                    else:
+                        response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+
+            elif predicted_intent =="math":
+                predicted_intent=model_knn.predict(user_vec)[0]
+                if confidence > 0.60:
+                    response = "I see you're interested in math! Feel free to ask any math-related questions."
+                else:
+                    predicted_intent=model_lr.predict(user_vec)[0]
+                    if confidence > 0.40:
+                        response = "Could you please type that again?"
+                    else:
+                        response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+                
+
+
+            elif predicted_intent == "fitness":
+                predicted_intent=model_knn.predict(user_vec)[0]
+                if confidence > 0.60:
+                    response = "I see you're interested in fitness! Feel free to ask any fitness-related questions."
+                else:
+                    predicted_intent=model_lr.predict(user_vec)[0]
+                    if confidence > 0.40:
+                        response = "Could you please type that again?"
+                    else: 
+                        response ="I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health"
+
             else:
                 response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
 
 
 
-        #SAVE ASSISTANT RESPONSE
+        # Saves history of chat
         st.write(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
 
