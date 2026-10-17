@@ -126,13 +126,13 @@ if user_text := st.chat_input("Talk to Titan"):
     confidence = np.max(lr_probs)
 
     
-    if intent_lr[0] == intent_knn[0]:
-        predicted_intent = intent_lr[0]
+    if intent_lr == intent_knn:
+        predicted_intent = intent_lr
     else:
         if confidence > 0.60:
-            predicted_intent = intent_lr[0]
+            predicted_intent = intent_lr
         else:
-            predicted_intent = intent_knn[0]
+            predicted_intent = intent_knn
 
 
 
@@ -487,7 +487,7 @@ if user_text := st.chat_input("Talk to Titan"):
 
         
         
-                # If none of your hardcoded keyword lists matched, the ML model takes over!
+# If none of your hardcoded keyword lists matched, the ML model takes over!
         else:
            
             user_vec = vectorizer.transform([user_text.lower()])
