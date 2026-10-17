@@ -1,0 +1,10 @@
+Fallback.txt
+
+sad|I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen.
+happy|I'm glad to hear you're feeling happy! Keep that positive energy going!
+stress|I can sense you're stressed. Take a deep breath and remember to take breaks.
+angry|I see you're angry. Calm down and take a deep breath.
+math|I see you need help with math. What problem are we solving?
+fitness|I see you're interested in fitness! Let's hit those goals.
+generic|I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!
+repeat|I didn't quite get that, could you type that again?
