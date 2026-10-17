@@ -60,7 +60,7 @@ def train_titan():
 
 
     X_train = np.array([item[0] for item in data if len(item) == 2])
-    y_train = np.array([item[1] for item  in data if len(item) == 2])
+    y_train = np.array([item[1].strip() for item in data if len(item) == 2])
 
     # 3. Vectorize and train the model
     vectorizer = TfidfVectorizer(ngram_range=(1, 2), strip_accents='unicode', token_pattern=r'(?u)\b\w+\b' )
@@ -519,20 +519,24 @@ if user_text := st.chat_input("Talk to Titan"):
                 elif lr_intent == "angry" or  lr_intent == "anger":
                     response = "I see your angry, calm down and take a deep breathe."
 
-
-                elif lr_intent == "math" or lr_intent == "mathematics":
-                    response = "I see you need help with math, I can help you with that just type n your response!"
+                elif predicted_intent == "math":
+                    try:
+                        clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
+                        solved_answer = sp.sympify(clean_expr)
+                        response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
+                    except:
+                        response = "I see you need help with math! What expression are we solving together?"
+                
 
                 elif lr_intent == "fitness":
                     response = "I see your interested in fitness! Type your response in and lets get fit!"
 
 
-
             elif confidence > 0.40 or compound_score > -0.3:
-                response = "Please type that again i didn't get that"
+                response = bot_responses["repeat"]
 
             else:
-                response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
+                response = bot_responses["generic"]
 
 
 
