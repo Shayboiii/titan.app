@@ -1,4 +1,4 @@
-# Training sentences for Titan
+\# Training sentences for Titan
 
 
 
@@ -33,6 +33,7 @@ Another long day has passed and I still feel completely miserable.|sad
 I feel so detached from the world around me like a ghost walking by.|sad
 The future looks completely bleak and I have zero hope left in me.|sad
 I just want to close my eyes and disappear for a little while.|sad
+• My friends are betraying me |sad
 
 
 # Sentences for Stress and Anxiety
@@ -66,6 +67,7 @@ I feel like I am walking on eggshells around everyone right now.|stress
 The workload is absolutely brutal and I am totally cracking under pressure.|stress
 I am so dizzy from stress I just need all of this to stop right now.|stress
 My brain feels completely fried from studying non stop for twelve hours.|stress
+Gosh, I have so much homework i'll never get it finished|stress
 
 # Sentences for Happiness
 Today was amazing and I feel energized|happy
@@ -98,6 +100,7 @@ I am so grateful for all the wonderful people in my life right now.|happy
 Riding a roller coaster today was an absolute adrenaline rush of fun.|happy
 I feel so motivated, inspired, and ready to take on the whole world.|happy
 The absolute best feeling is waking up early on a weekend, realizing you have nowhere to be, and pulling the warm blankets right back over your shoulders.|happy
+I am feeling so warm today|happy
 
 # Sentences for Anger
 I can feel my blood boiling and I am about to lose my mind on someone.|anger
@@ -130,6 +133,7 @@ I am totally exhausted from dealing with your toxic drama every single day.|ange
 They broke their promise for the hundredth time and I am completely done.|anger
 It makes my blood boil when people act entitled and treat others like garbage.|anger
 I am so sick of walking on eggshells around your ridiculous temper tantrums.|anger
+I am feeling so apoletic.|anger
 
 # Math Sentences
 what is fifteen times fifteen.|math
@@ -162,6 +166,7 @@ how do I convert a fraction into a decimal.|math
 what is an acute angle.|math
 can you explain order of operations pemdas.|math
 how do you find the slope of a line.|math
+what is the formula of a slope?|math
 
 # Fitness Sentences
 How many days a week should I work out?|fitness
@@ -194,3 +199,4 @@ What is a safe amount of weight to lose per week?|fitness
 How do I get rid of a stubborn side cramp while running?|fitness
 Can you explain what macros are and how to count them?|fitness
 What are the best gym exercises for targeting the glutes?|fitness
+What are good gym excercises for beginners|fitness
