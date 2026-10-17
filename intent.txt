@@ -131,3 +131,66 @@ They broke their promise for the hundredth time and I am completely done.|anger
 It makes my blood boil when people act entitled and treat others like garbage.|anger
 I am so sick of walking on eggshells around your ridiculous temper tantrums.|anger
 
+# Math Sentences
+what is fifteen times fifteen.|math
+can you help me solve this algebra equation.|math
+how do I find the area of a circle.|math
+what is the square root of one hundred and forty four.|math
+how do you calculate the perimeter of a rectangle.|math
+solve for x in this formula.|math
+what is the value of pi.|math
+how do I divide fractions easily.|math
+what is a prime number.|math
+can you explain the pythagorean theorem to me.|math
+what is ten percent of two hundred.|math
+how do you calculate a percentage change.|math
+what is the circumference of a circle.|math
+how to solve linear equations step by step.|math
+what is a right angle triangle.|math
+how do I multiply large numbers in my head.|math
+what is the definition of a variable in math.|math
+how many degrees are in a triangle.|math
+what does an exponent do to a number.|math
+can you help me balance this math equation.|math
+how do you find the mean and median of a dataset.|math
+what is the greatest common factor of twelve and eighteen.|math
+how to calculate the volume of a cylinder.|math
+what is the difference between a numerator and denominator.|math
+how do you graph a linear function.|math
+what is five to the power of three.|math
+how do I convert a fraction into a decimal.|math
+what is an acute angle.|math
+can you explain order of operations pemdas.|math
+how do you find the slope of a line.|math
+
+# Fitness Sentences
+How many days a week should I work out?|fitness
+What is a good workout routine for chest day?|fitness
+How many calories should I eat to lose weight?|fitness
+Can you explain the difference between cardio and weightlifting?|fitness
+What are the best exercises to build core strength?|fitness
+How do I calculate my daily protein intake requirement?|fitness
+What should I eat for a pre-workout snack?|fitness
+How can I improve my flexibility and joint mobility?|fitness
+What is the proper form for a barbell squat?|fitness
+How long should my rest periods be between lifting sets?|fitness
+Is it better to do cardio before or after lifting weights?|fitness
+What are some good high-intensity interval training exercises?|fitness
+How do I prevent muscle soreness after a heavy workout?|fitness
+What is the best way to track my fitness progress over time?|fitness
+How can I increase my bench press max safely?|fitness
+What are the benefits of doing active recovery on rest days?|fitness
+How do I stay motivated to go to the gym consistently?|fitness
+Can you suggest a good home workout without any equipment?|fitness
+What is progressive overload and how do I use it?|fitness
+How much water should I drink during a heavy workout session?|fitness
+What are the signs that I am overtraining my body?|fitness
+How do I execute a proper deadlift without hurting my back?|fitness
+Is stretching before a workout necessary?|fitness
+What is the difference between muscular endurance and hypertrophy?|fitness
+How many hours of sleep do I need for optimal muscle recovery?|fitness
+Are resistance bands as effective as free weights?|fitness
+What is a safe amount of weight to lose per week?|fitness
+How do I get rid of a stubborn side cramp while running?|fitness
+Can you explain what macros are and how to count them?|fitness
+What are the best gym exercises for targeting the glutes?|fitness
