@@ -86,7 +86,7 @@ def train_titan():
     return vectorizer, model_lr, model_knn, model_ntlk, bot_responses
 
 
-vectorizer, model_lr, model_knn, model_ntlk = train_titan()
+vectorizer, model_lr, model_knn, model_ntlk, bot_responses = train_titan()
 
    
 if "last_question" not in st.session_state:
