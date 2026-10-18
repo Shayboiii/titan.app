@@ -149,10 +149,6 @@ if user_text := st.chat_input("Talk to Titan"):
             response = "Yeah I know right!"
 
 
-        elif predicted_intent == "stress":
-            response = "Take a break and settle down, it should help."
-
-
         elif predicted_intent == "hungry":
             snack = random.choice(Healthy_food)
     
@@ -177,14 +173,8 @@ if user_text := st.chat_input("Talk to Titan"):
             response = "Go to sleep don't use a phone 30 minutes before bed time."
 
 
-        elif predicted_intent == "anger":
-            response = "I can tell you're incredibly frustrated right now. Take a deep breath—I am here to listen if you need to vent it out."
-
         elif predicted_intent == "weight":
             response = "Fitness is about feeling strong and healthy, not just a number on a scale! Focus on clean eating and consistent movement."
-
-        elif predicted_intent == "happy":
-            response = "That is Great especially if your starting out like this you may not need me anymore! or you're fixing your mental health which is great!"
 
 
         elif any(word in Excited_words for word in user_words):
@@ -449,6 +439,9 @@ if user_text := st.chat_input("Talk to Titan"):
             "- **What's below squared**: The bottom equation raised to the power of 2\n\n"
             "Are you working through a tough fraction derivative right now?"
     )
+
+
+        # Tokenizing words to translate from numbhers to words
         elif any(word in user_words for word in ["plus", "minus", "times", "divided"]):
             try:
                 # 1. Clean the incoming text string directly
@@ -472,7 +465,7 @@ if user_text := st.chat_input("Talk to Titan"):
 
 
 
-        #Normal calculator
+        # Normal calculator
         elif any(op in user_text.lower() for op in ["+", "-", "*", "/"]) and "=" not in user_text.lower():
             try:
                 # First, swap human text symbols for programming symbols
