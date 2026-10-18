@@ -77,7 +77,7 @@ def train_titan():
     model_nltk = SentimentIntensityAnalyzer()
 
     bot_responses = {}
-    with open("Fallback.txt", "r", encoding="utf-8") as f:
+    with open("Respond.txt", "r", encoding="utf-8") as f:
         for line in f:
             if line.strip() and "|" in line:
                 category, message = line.strip().split("|", 1)
