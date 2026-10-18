@@ -18,14 +18,8 @@ st.header("Helps with Math, Mental health and Fitness")
 
 #Lists!
 Healthy_food = np.array(["Hummus","Apple","Banana","Orange","Carrot","Salad"])
-Sad_words = np.array(["crying", "hurt", "depressed", "glum", "upset", "dull", "grime", "moody", "sorrowful","heartbroken", "miserable", "gloomy", "unhappy", "hopeless", "weeping","exhausted", "drained", "weary", "heavy", "broken", "worthless", "useless"])
-Happy_words = np.array(["happy", "overjoyed", "delighted", "elated", "joyful","blissful","gleeful","jubilant","cheerful", "sunny", "radiant", "beaming", "glowing", "joyous", "lighthearted", "carefree", "bouncy", "peppy", "perky", "playful", "content", "satisfied", "pleased", "gratified", "good-natured", "thrilled", "stoked", "pumped","charmed"])
-Excited_words = np.array(["enthusiastic", "eager", "animated", "spirited", "lively", "vibrant", "energetic", "exuberant", "passionate", "zealous", "dynamic", "fired up", "ecstatic", "euphoric", "rhapsodic", "frenzied", "electric", "unstoppable", "triumphant", "victorious"])
-Stressed_words = np.array(["stressed", "overwhelmed", "anxious", "panicking", "worried", "pressured", "panicked", "scared", "afraid", "nervous"])
 Excited_experiences = np.array(["roller coaster", "theme park", "going to", "beach", "swimming", "pool", "trip", "birthday", "house", "party"])
 Fitness_words = np.array(["workout", "exercise", "gym", "run", "fitness", "cardio", "lifting", "training"])
-Anger_words = np.array(["angry", "mad", "furious", "annoyed", "pissed", "irritated", "frustrated", "raging"])
-Anxiety_words = np.array(["scared", "terrified", "nervous", "paranoid", "shaking", "fear", "dread", "uneasy"])
 Weight_words = np.array(["fat", "skinny", "weight", "diet", "calories", "shred", "bulk", "obese", "lose", "gain"])
 Hydration_words = np.array(["thirsty", "dehydrated", "water", "drink", "gatorade", "liquid", "parched"])
 
@@ -153,21 +147,21 @@ if user_text := st.chat_input("Talk to Titan"):
 
         # Titan's vectorized emotions response
         elif confidence <= 0.40 or compound_score <= -0.3:
-                                    response = bot_responses["repeat"]
+            response = bot_responses["repeat"]
         
         elif confidence > 0.60:
             if predicted_intent == "sad":
-                response = "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it."
+                response =bot_responses.get("sad", "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it.")
         
             elif predicted_intent == "happy":
-                response = "I'm glad to hear you're feeling happy! Keep that positive energy going!"
+                response = bot_responses.get("happy", "I'm glad to hear you're feeling happy! Keep that positive energy going!")
         
         
             elif predicted_intent == "stress":
-                response = "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax."
+                response = bot_responses.get("stress", "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax.")
         
             elif predicted_intent == "angry":
-                response = "I see you're angry, calm down and take a deep breath."
+                response = bot_responses.get("angry", "I see you're angry, calm down and take a deep breath.")
         
             elif predicted_intent == "math": 
                 Math_vocab_keywords = np.array(["definition", "what is", "define", "mean", "explain", "difference", "concept"])
@@ -180,15 +174,17 @@ if user_text := st.chat_input("Talk to Titan"):
                         solved_answer = sp.sympify(clean_expr)
                         response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
                     except:
-                        response = "I see you need help with math! What expression are we solving together?"
+                        response =bot_responses.get("math", "I see you need help with math! What expression are we solving together?")
                         
         
             elif predicted_intent == "fitness":
-                response = "I see you're interested in fitness! Type your response in and let's get fit!"
+                response = bot_responses.get("fitness", "I see you're interested in fitness! Type your response in and let's get fit!")
 
 
             elif predicted_intent == "excited":
-                response = "That energy is awesome! What's making you feel so excited and fired up today?"
+                # This safely pulls your response text and handles both messages at once!
+                response = bot_responses.get("excited", "That energy is awesome! What sounds like an amazing experience? Wow, have fun there!")
+
         
 
 
@@ -226,9 +222,6 @@ if user_text := st.chat_input("Talk to Titan"):
         elif predicted_intent == "weight":
             response = "Fitness is about feeling strong and healthy, not just a number on a scale! Focus on clean eating and consistent movement."
 
-
-        elif any(word in Excited_experiences for word in user_words):
-            response = "Wow Have fun there!"
 
         elif any(word in Fitness_words for word in user_words) or "workout" in user_words:
             workout_routine = random.choice(Exercises)
