@@ -163,7 +163,7 @@ if user_text := st.chat_input("Talk to Titan"):
 
                 else:
                     try:
-                        clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
+                        clean_expr = user_text.lower().replace("times", "*").replace("plus", "+").replace("minus", "-").replace("divided", "/")
                         solved_answer = sp.sympify(clean_expr)
                         response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
                     except:
@@ -691,6 +691,7 @@ with st.sidebar:
         st.success(f"cos({angle}°) = **{math.cos(rad):.4f}**")
         
         # Guard against undefined tangent values like 90 degrees
+        int_angle = int(angle)
         if angle % 90 == 0 and (angle // 90) % 2 != 0:
             st.error(f"tan({angle}°) is Undefined!")
         else:
