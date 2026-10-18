@@ -225,6 +225,8 @@ We are going swimming in the pool|excited
 I am planning a trip for my birthday|excited
 I am going to a massive house party|excited
 I am going to ride a roller coaster|excited
+I can't wait to go to the party tonight it will be wild|excited
+We are heading out to the beach for a fun weekend|excited
 I am so pumped up for this next adventure|excited
 Everything feels incredibly electric and amazing today|excited
 I am just so full of vibrant energy right now|excited
@@ -232,8 +234,6 @@ We won the match and I feel totally victorious|excited
 I am so eager to get started on this new project|excited
 My heart is racing because I am so enthusiastic about this|excited
 I feel completely unstoppable and ready to win|excited
-We are heading out to the beach for a fun weekend|excited
-I can't wait to go to the party tonight it will be wild|excited
 I feel totally animated and lively after that great news|excited
 This is the most spirited and joyful I have felt in weeks|excited
 I am so incredibly stoked for our upcoming holiday trip|excited
