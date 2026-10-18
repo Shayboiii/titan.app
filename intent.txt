@@ -1,8 +1,7 @@
-# Training sentences for Titan
 
 
 
-# Sentences for Sadness
+
 I am so sad|sad
 I feel completely down and hopeless|sad
 I am so drained|sad
@@ -33,10 +32,9 @@ Another long day has passed and I still feel completely miserable|sad
 I feel so detached from the world around me like a ghost walking by|sad
 The future looks completely bleak and I have zero hope left in me|sad
 I just want to close my eyes and disappear for a little while|sad
-• My friends are betraying me |sad
+My friends are betraying me |sad
 
 
-# Sentences for Stress and Anxiety
 I have so much homework and i feel overwhelmed|stress
 I am panicking i didn't study for this exam|stress
 I have so much work to do i am so overwhelmed|stress
@@ -70,7 +68,6 @@ My brain feels completely fried from studying non stop for twelve hours|stress
 Gosh, I have so much homework i'll never get it finished|stress
 
 
-# Sentences for Happiness
 Today was amazing and I feel energized|happy
 I am so cheerful and glad to be here|happy
 Today I ate pizza I am so happy|happy
@@ -104,7 +101,6 @@ The absolute best feeling is waking up early on a weekend, realizing you have no
 I am feeling so warm today|happy
 
 
-# Sentences for Anger
 I can feel my blood boiling and I am about to lose my mind on someone|anger
 They completely ruined my plans and didn't even bother to say sorry|anger
 I am so sick of people making stupid excuses for their lazy behavior|anger
@@ -138,7 +134,6 @@ I am so sick of walking on eggshells around your ridiculous temper tantrums|ange
 I am feeling so apoletic|anger
 
 
-# Math Sentences
 what is fifteen times fifteen|math
 can you help me solve this algebra equation|math
 how do I find the area of a circle|math
@@ -172,7 +167,6 @@ how do you find the slope of a line|math
 what is the formula of a slope?|math
 
 
-# Fitness Sentences
 How many days a week should I work out?|fitness
 What is a good workout routine for chest day?|fitness
 How many calories should I eat to lose weight?|fitness
@@ -206,7 +200,6 @@ What are the best gym exercises for targeting the glutes?|fitness
 What are good gym excercises for beginners|fitness
 
 
-# Sentences for Excited Intent
 I am feeling so enthusiastic today|excited
 I am so eager and animated right now|excited
 I feel completely spirited and lively|excited
