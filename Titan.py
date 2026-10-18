@@ -67,7 +67,7 @@ def train_titan():
     model_knn = kn(n_neighbors=3)
     model_knn.fit(X_train_vec, y_train)
 
-    model_nltk = SentimentIntensityAnalyzer()
+    
 
     bot_responses = {}
     with open("Respond.txt", "r", encoding="utf-8") as f:
@@ -76,10 +76,10 @@ def train_titan():
                 category, message = line.strip().split("|", 1)
                 bot_responses[category.strip()] = message.strip()
 
-    return vectorizer, model_lr, model_knn, model_nltk, bot_responses
+    return vectorizer, model_lr, model_knn, bot_responses
 
 
-vectorizer, model_lr, model_knn, model_nltk, bot_responses = train_titan()
+vectorizer, model_lr, model_knn,bot_responses = train_titan()
 
    
 if "last_question" not in st.session_state:
@@ -113,21 +113,9 @@ if user_text := st.chat_input("Talk to Titan"):
     user_vec = vectorizer.transform([user_text.lower()])
     intent_lr = model_lr.predict(user_vec)[0]
     intent_knn = model_knn.predict(user_vec)[0]
-
-
     
     lr_probs = model_lr.predict_proba(user_vec)[0]
     confidence = np.max(lr_probs)
-
-
-    user_vec = vectorizer.transform([user_text.lower()])
-
-
-    
-
-    confidence = np.max(model_lr.predict_proba(user_vec))
-    intent_lr = model_lr.predict(user_vec)[0]
-    intent_knn = model_knn.predict(user_vec)[0]
 
 
     if intent_lr == intent_knn:
