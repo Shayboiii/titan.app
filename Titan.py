@@ -74,7 +74,7 @@ def train_titan():
     model_knn = kn(n_neighbors=3)
     model_knn.fit(X_train_vec, y_train)
 
-    model_ntlk = SentimentIntensityAnalyzer()
+    model_nltk = SentimentIntensityAnalyzer()
 
     bot_responses = {}
     with open("Fallback.txt", "r", encoding="utf-8") as f:
@@ -83,10 +83,10 @@ def train_titan():
                 category, message = line.strip().split("|", 1)
                 bot_responses[category.strip()] = message.strip()
 
-    return vectorizer, model_lr, model_knn, model_ntlk, bot_responses
+    return vectorizer, model_lr, model_knn, model_nltk, bot_responses
 
 
-vectorizer, model_lr, model_knn, model_ntlk, bot_responses = train_titan()
+vectorizer, model_lr, model_knn, model_nltk, bot_responses = train_titan()
 
    
 if "last_question" not in st.session_state:
@@ -493,7 +493,7 @@ if user_text := st.chat_input("Talk to Titan"):
             user_vec = vectorizer.transform([user_text.lower()])
 
 
-            sentiment_scores = model_ntlk.polarity_scores(user_text)
+            sentiment_scores = model_nltk.polarity_scores(user_text)
             compound_score = sentiment_scores['compound']
 
 
@@ -506,37 +506,37 @@ if user_text := st.chat_input("Talk to Titan"):
             
             # Titan tries to guess what the user says properly
             if confidence <= 0.40 or compound_score <= -0.3:
-                response = bot_responses["repeat"]
+                            response = bot_responses["repeat"]
 
-            else:
+            elif confidence > 0.60:
                 if predicted_intent == "sad":
-                        response = "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it."
+                    response = "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it."
 
                 elif predicted_intent == "happy":
-                        response = "I'm glad to hear you're feeling happy! Keep that positive energy going!"
+                    response = "I'm glad to hear you're feeling happy! Keep that positive energy going!"
 
 
                 elif predicted_intent == "stress":
-                        response = "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax."
+                    response = "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax."
 
                 elif predicted_intent == "angry":
-                        response = "I see you're angry, calm down and take a deep breath."
+                    response = "I see you're angry, calm down and take a deep breath."
 
                 elif predicted_intent == "math":
                     try:
-                            clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
-                            solved_answer = sp.sympify(clean_expr)
-                            response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
+                        clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
+                        solved_answer = sp.sympify(clean_expr)
+                        response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
                     except:
-                            response = "I see you need help with math! What expression are we solving together?"
-                    
+                        response = "I see you need help with math! What expression are we solving together?"
+                
 
                 elif predicted_intent == "fitness":
-                    response = "I see you're interested in fitness! Type your response in and let's get fit!"
+                    response = "I see you're interested in fitness! Type your response in and lets get fit!"
 
 
-                else:
-                    response = bot_responses["generic"]
+            else:
+                response = bot_responses["generic"]
 
 
 
