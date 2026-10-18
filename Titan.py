@@ -76,10 +76,10 @@ def train_titan():
                 category, message = line.strip().split("|", 1)
                 bot_responses[category.strip()] = message.strip()
 
-    return vectorizer, model_lr, model_knn, bot_responses
+    return vectorizer, model_lr, model_knn, bot_responses, X_train, y_train
 
 
-vectorizer, model_lr, model_knn,bot_responses = train_titan()
+vectorizer, model_lr, model_knn,bot_responses, X_train, y_train = train_titan()
 
    
 if "last_question" not in st.session_state:
@@ -118,14 +118,20 @@ if user_text := st.chat_input("Talk to Titan"):
     confidence = np.max(lr_probs)
 
 
-    if intent_lr == intent_knn:
-        predicted_intent = intent_lr
+    clean_check = user_text.lower().strip()
+    if clean_check in X_train:
+        matched_idx = list(X_train).index(clean_check)
+        predicted_intent = y_train[matched_idx]
+        confidence = 1.0  # Bypass the fallback threshold completely!
     else:
-        if confidence > 0.60:
+        # If it's a new sentence, let the machine learning model guess normally
+        if intent_lr == intent_knn:
             predicted_intent = intent_lr
         else:
-            predicted_intent = intent_knn
-
+            if confidence > 0.60:
+                predicted_intent = intent_lr
+            else:
+                predicted_intent = intent_knn
 
     # BACKEND CHATBOT CODE         
     with st.chat_message("assistant"):
