@@ -122,9 +122,8 @@ if user_text := st.chat_input("Talk to Titan"):
 
     user_vec = vectorizer.transform([user_text.lower()])
 
-# Calculate Sentiment Scores and Confidence Scores
-    sentiment_scores = model_nltk.polarity_scores(user_text)
-    compound_score = sentiment_scores['compound']
+
+    
 
     confidence = np.max(model_lr.predict_proba(user_vec))
     intent_lr = model_lr.predict(user_vec)[0]
@@ -140,12 +139,13 @@ if user_text := st.chat_input("Talk to Titan"):
             predicted_intent = intent_knn
 
 
+    # BACKEND CHATBOT CODE         
     with st.chat_message("assistant"):
         if "hi!" in user_words or "hello" in user_words or "hi" in user_words:
             response = "Hello!"
 
         # Titan's vectorized emotions response
-        elif confidence <= 0.40 or compound_score <= -0.3:
+        elif confidence <= 0.40:
             response = bot_responses["repeat"]
         
         elif confidence > 0.60:
