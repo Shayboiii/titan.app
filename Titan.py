@@ -126,7 +126,18 @@ if user_text := st.chat_input("Talk to Titan"):
     lr_probs = model_lr.predict_proba(user_vec)[0]
     confidence = np.max(lr_probs)
 
-    
+
+    user_vec = vectorizer.transform([user_text.lower()])
+
+# Calculate Sentiment Scores and Confidence Scores
+    sentiment_scores = model_nltk.polarity_scores(user_text)
+    compound_score = sentiment_scores['compound']
+
+    confidence = np.max(model_lr.predict_proba(user_vec))
+    intent_lr = model_lr.predict(user_vec)[0]
+    intent_knn = model_knn.predict(user_vec)[0]
+
+
     if intent_lr == intent_knn:
         predicted_intent = intent_lr
     else:
@@ -136,11 +147,50 @@ if user_text := st.chat_input("Talk to Titan"):
             predicted_intent = intent_knn
 
 
-
-    
     with st.chat_message("assistant"):
         if "hi!" in user_words or "hello" in user_words or "hi" in user_words:
             response = "Hello!"
+
+        # Titan's vectorized emotions response
+        elif confidence <= 0.40 or compound_score <= -0.3:
+                                    response = bot_responses["repeat"]
+        
+        elif confidence > 0.60:
+            if predicted_intent == "sad":
+                response = "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it."
+        
+            elif predicted_intent == "happy":
+                response = "I'm glad to hear you're feeling happy! Keep that positive energy going!"
+        
+        
+            elif predicted_intent == "stress":
+                response = "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax."
+        
+            elif predicted_intent == "angry":
+                response = "I see you're angry, calm down and take a deep breath."
+        
+            elif predicted_intent == "math": 
+                Math_vocab_keywords = np.array(["definition", "what is", "define", "mean", "explain", "difference", "concept"])
+                if any(word in user_text.lower() for word in Math_vocab_keywords):
+                    response = bot_responses.get("math", "I see you need help with math! What concept are we tackling together?")
+
+                else:
+                    try:
+                        clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
+                        solved_answer = sp.sympify(clean_expr)
+                        response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
+                    except:
+                        response = "I see you need help with math! What expression are we solving together?"
+                        
+        
+            elif predicted_intent == "fitness":
+                response = "I see you're interested in fitness! Type your response in and let's get fit!"
+
+
+            elif predicted_intent == "excited":
+                response = "That energy is awesome! What's making you feel so excited and fired up today?"
+        
+
 
         elif "ok" in user_words or "okay" in user_words:
             response = "Alright then!"
@@ -176,9 +226,6 @@ if user_text := st.chat_input("Talk to Titan"):
         elif predicted_intent == "weight":
             response = "Fitness is about feeling strong and healthy, not just a number on a scale! Focus on clean eating and consistent movement."
 
-
-        elif any(word in Excited_words for word in user_words):
-            response = "That is Amazing! What is making you excited?"
 
         elif any(word in Excited_experiences for word in user_words):
             response = "Wow Have fun there!"
@@ -440,7 +487,6 @@ if user_text := st.chat_input("Talk to Titan"):
             "Are you working through a tough fraction derivative right now?"
     )
 
-
         # Tokenizing words to translate from numbhers to words
         elif any(word in user_words for word in ["plus", "minus", "times", "divided"]):
             try:
@@ -468,69 +514,21 @@ if user_text := st.chat_input("Talk to Titan"):
         # Normal calculator
         elif any(op in user_text.lower() for op in ["+", "-", "*", "/"]) and "=" not in user_text.lower():
             try:
-                # First, swap human text symbols for programming symbols
                 clean_text = user_text.lower()
-                # Second, strip out everything except valid numbers and operators
                 math_ready = "".join(c for c in clean_text if c in "0123456789+-*/.()")
-                # Finally, pass the fixed string to eval()
-                response = f"Titan : I calculated that for you! The answer is {eval(math_ready)}"
+        
+                safe_answer = sp.sympify(math_ready)
+                response = f"Titan : I calculated that for you! The answer is {safe_answer}"
             except ZeroDivisionError:
                 response = "Nice try, but you can't divide by zero! You'll break the universe."
             except:
                 response = "I could not calculate that! Please check your math formatting."
 
-        # If nothing makes sense:
 
+
+                # Put this at the very bottom to catch anything that slips past your filters!
         else:
-           
-            user_vec = vectorizer.transform([user_text.lower()])
-
-
-            sentiment_scores = model_nltk.polarity_scores(user_text)
-            compound_score = sentiment_scores['compound']
-
-
-            confidence = np.max(model_lr.predict_proba(user_vec))
-
-            lr_intent = model_lr.predict(user_vec)[0]
-            knn_intent = model_knn.predict(user_vec)[0] 
-
-            
-            
-            # Titan tries to guess what the user says properly
-            if confidence <= 0.40 or compound_score <= -0.3:
-                            response = bot_responses["repeat"]
-
-            elif confidence > 0.60:
-                if predicted_intent == "sad":
-                    response = "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it."
-
-                elif predicted_intent == "happy":
-                    response = "I'm glad to hear you're feeling happy! Keep that positive energy going!"
-
-
-                elif predicted_intent == "stress":
-                    response = "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax."
-
-                elif predicted_intent == "angry":
-                    response = "I see you're angry, calm down and take a deep breath."
-
-                elif predicted_intent == "math":
-                    try:
-                        clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
-                        solved_answer = sp.sympify(clean_expr)
-                        response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
-                    except:
-                        response = "I see you need help with math! What expression are we solving together?"
-                
-
-                elif predicted_intent == "fitness":
-                    response = "I see you're interested in fitness! Type your response in and lets get fit!"
-
-
-            else:
-                response = bot_responses["generic"]
-
+            response = bot_responses.get("generic", "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!")
 
 
         # Saves history of chat
