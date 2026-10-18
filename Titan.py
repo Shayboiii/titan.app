@@ -122,7 +122,7 @@ if user_text := st.chat_input("Talk to Titan"):
     if clean_check in X_train:
         matched_idx = list(X_train).index(clean_check)
         predicted_intent = y_train[matched_idx]
-        confidence = 1.0  # Bypass the fallback threshold completely!
+        confidence = 1.0 
     else:
         # If it's a new sentence, let the machine learning model guess normally
         if intent_lr == intent_knn:
@@ -139,10 +139,10 @@ if user_text := st.chat_input("Talk to Titan"):
             response = "Hello!"
 
         # Titan's vectorized emotions response
-        elif confidence <= 0.40:
+        elif confidence <= 0.45:
             response = bot_responses["repeat"]
         
-        elif confidence > 0.60:
+        elif confidence > 0.45:
             if predicted_intent == "sad":
                 response =bot_responses.get("sad", "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it.")
         
