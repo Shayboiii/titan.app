@@ -100,6 +100,7 @@ if "messages" not in st.session_state:
     ]
 
 
+
 # 2. Loop for chat history to stay visible on screen 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -485,9 +486,8 @@ if user_text := st.chat_input("Talk to Titan"):
             except:
                 response = "I could not calculate that! Please check your math formatting."
 
-        
-        
-# If none of your hardcoded keyword lists matched, the ML model takes over!
+        # If nothing makes sense:
+
         else:
            
             user_vec = vectorizer.transform([user_text.lower()])
@@ -504,39 +504,39 @@ if user_text := st.chat_input("Talk to Titan"):
 
             
             
-            # 3. Choose the fallback response based on Titan's machine learning guess
-            if confidence > 0.60:
-                if lr_intent == "sad":
-                    response = "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it."
-
-                elif lr_intent == "happy":
-                    response = "I'm glad to hear you're feeling happy! Keep that positive energy going!"
-
-
-                elif lr_intent == "stress":
-                    response = "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax."
-
-                elif lr_intent == "angry" or  lr_intent == "anger":
-                    response = "I see your angry, calm down and take a deep breathe."
-
-                elif predicted_intent == "math":
-                    try:
-                        clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
-                        solved_answer = sp.sympify(clean_expr)
-                        response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
-                    except:
-                        response = "I see you need help with math! What expression are we solving together?"
-                
-
-                elif lr_intent == "fitness":
-                    response = "I see your interested in fitness! Type your response in and lets get fit!"
-
-
-            elif confidence > 0.40 or compound_score > -0.3:
+            # Titan tries to guess what the user says properly
+            if confidence <= 0.40 or compound_score <= -0.3:
                 response = bot_responses["repeat"]
 
             else:
-                response = bot_responses["generic"]
+                if predicted_intent == "sad":
+                        response = "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it."
+
+                elif predicted_intent == "happy":
+                        response = "I'm glad to hear you're feeling happy! Keep that positive energy going!"
+
+
+                elif predicted_intent == "stress":
+                        response = "I can sense you're stressed. Take a deep breath and remember to take breaks when you need them. I'm here to help you relax."
+
+                elif predicted_intent == "angry":
+                        response = "I see you're angry, calm down and take a deep breath."
+
+                elif predicted_intent == "math":
+                    try:
+                            clean_expr = user_text.lower().replace("times", "*").replace("plus", "+")
+                            solved_answer = sp.sympify(clean_expr)
+                            response = f"🧮 I calculated that for you! The answer is: **{solved_answer}**"
+                    except:
+                            response = "I see you need help with math! What expression are we solving together?"
+                    
+
+                elif predicted_intent == "fitness":
+                    response = "I see you're interested in fitness! Type your response in and let's get fit!"
+
+
+                else:
+                    response = bot_responses["generic"]
 
 
 
