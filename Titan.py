@@ -19,7 +19,6 @@ st.header("Helps with Math, Mental health and Fitness")
 #Lists!
 Healthy_food = np.array(["Hummus","Apple","Banana","Orange","Carrot","Salad"])
 Excited_experiences = np.array(["roller coaster", "theme park", "going to", "beach", "swimming", "pool", "trip", "birthday", "house", "party"])
-Fitness_words = np.array(["workout", "exercise", "gym", "run", "fitness", "cardio", "lifting", "training"])
 Weight_words = np.array(["fat", "skinny", "weight", "diet", "calories", "shred", "bulk", "obese", "lose", "gain"])
 Hydration_words = np.array(["thirsty", "dehydrated", "water", "drink", "gatorade", "liquid", "parched"])
 
@@ -223,7 +222,7 @@ if user_text := st.chat_input("Talk to Titan"):
             response = "Fitness is about feeling strong and healthy, not just a number on a scale! Focus on clean eating and consistent movement."
 
 
-        elif any(word in Fitness_words for word in user_words) or "workout" in user_words:
+        elif "workout" in user_words:
             workout_routine = random.choice(Exercises)
             response = (
             "Moving your body releases endorphins, which helps both your physical strength and your mental health!\n\n"
