@@ -5,7 +5,6 @@ import sympy as sp
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier as kn
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 nltk.download('punkt_tab')
@@ -64,9 +63,6 @@ def train_titan():
     model_lr.fit(X_train_vec, y_train)
     
 
-    model_knn = kn(n_neighbors=3)
-    model_knn.fit(X_train_vec, y_train)
-
     
 
     bot_responses = {}
@@ -76,10 +72,10 @@ def train_titan():
                 category, message = line.strip().split("|", 1)
                 bot_responses[category.strip()] = message.strip()
 
-    return vectorizer, model_lr, model_knn, bot_responses, X_train, y_train
+    return vectorizer, model_lr,bot_responses, X_train, y_train
 
 
-vectorizer, model_lr, model_knn,bot_responses, X_train, y_train = train_titan()
+vectorizer, model_lr,bot_responses, X_train, y_train = train_titan()
 
    
 if "last_question" not in st.session_state:
@@ -112,7 +108,7 @@ if user_text := st.chat_input("Talk to Titan"):
 
     user_vec = vectorizer.transform([user_text.lower()])
     intent_lr = model_lr.predict(user_vec)[0]
-    intent_knn = model_knn.predict(user_vec)[0]
+    
     
     lr_probs = model_lr.predict_proba(user_vec)[0]
     confidence = np.max(lr_probs)
@@ -125,13 +121,9 @@ if user_text := st.chat_input("Talk to Titan"):
         confidence = 1.0 
     else:
         # If it's a new sentence, let the machine learning model guess normally
-        if intent_lr == intent_knn:
-            predicted_intent = intent_lr
-        else:
-            if confidence > 0.60:
-                predicted_intent = intent_lr
-            else:
-                predicted_intent = intent_knn
+        predicted_intent = intent_lr
+
+
 
     # BACKEND CHATBOT CODE         
     with st.chat_message("assistant"):
@@ -143,14 +135,6 @@ if user_text := st.chat_input("Talk to Titan"):
 
         if "hi!" in user_words or "hello" in user_words or "hi" in user_words:
             response = "Hello!"
-
-        # If Vader is confident that they are happy or excited
-        elif confidence <= 0.45 and compound_score >= 0.5:
-            response = bot_responses.get("excited", "That energy is awesome! What sounds like an amazing experience? Wow, have fun there!")
-
-        #
-        elif confidence <= 0.45:
-            response = bot_responses.get("repeat", "I didn't quite catch that. Could you try rephrasing your message for me?")
             
         
         # 3. Regular high confidence ML paths
@@ -168,28 +152,6 @@ if user_text := st.chat_input("Talk to Titan"):
         
             elif predicted_intent == "angry":
                 response = bot_responses.get("angry", "I see you're angry, calm down and take a deep breath.")
-
-
-        # If the lr and knn models are confused but VADER detects a strong negative emotion
-            elif confidence <= 0.45:
-                # 1. Get VADER's individual emotional breakdowns
-                neg_intensity = sentiment_scores['neg']  
-                pos_intensity = sentiment_scores['pos']  
-
-                # 2. Check if VADER is genuinely detecting sadness/negativity
-                if neg_intensity > pos_intensity and neg_intensity > 0.25:
-                    # 3. Double-check with a quick keyword list to separate Sadness
-                    sad_keywords = ["sad", "down", "cry", "depressed", "lonely", "hurt", "blue", "unhappy"]
-                    
-                    if any(word in user_text.lower() for word in sad_keywords):
-                        response = bot_responses.get("sad", "I can tell you're feeling down. I'm here to listen.")
-                    else:
-                        # If it's negative but doesn't have sad words, it might be stress or anger
-                        response = "It sounds like you're dealing with some heavy emotions right now. Want to talk about it?"
-                else:
-                    # True fallback if it's completely neutral or confusing
-                    response = bot_responses.get("repeat", "I didn't quite catch that. Could you try rephrasing your message for me?")
-
 
         
             elif predicted_intent == "math": 
@@ -214,7 +176,33 @@ if user_text := st.chat_input("Talk to Titan"):
                 # This safely pulls your response text and handles both messages at once!
                 response = bot_responses.get("excited", "That energy is awesome! What sounds like an amazing experience? Wow, have fun there!")
 
-        
+
+
+
+        # If the lr model is confused but VADER detects a strong emotion
+        elif confidence <= 0.45:
+            # 1. Get VADER's individual emotional breakdowns first
+            neg_intensity = sentiment_scores['neg']  
+            pos_intensity = sentiment_scores['pos']  
+            
+                # 2. Check for happy or excited overrides
+            if compound_score >= 0.5:
+                    response = bot_responses.get("excited", "That energy is awesome! What sounds like an amazing experience? Wow, have fun there!")
+            
+                # 3. Check if VADER is genuinely detecting sadness/negativity
+            elif neg_intensity > pos_intensity and neg_intensity > 0.25:
+                    # 4. Double-check with a quick keyword list to separate Sadness
+                    sad_keywords = ["sad", "down", "cry", "depressed", "lonely", "hurt", "blue", "unhappy"]
+                    
+                    if any(word in user_text.lower() for word in sad_keywords):
+                        response = bot_responses.get("sad", "I can tell you're feeling down. I'm here to listen.")
+                    else:
+                        # If it's negative but doesn't have sad words, it catches stress or anger safely!
+                        response = "It sounds like you're dealing with some heavy emotions right now. Want to talk about it?"
+            
+            else:
+                # True fallback if it's completely neutral or confusing
+                response = bot_responses.get("repeat", "I didn't quite catch that. Could you try rephrasing your message for me?")
 
 
         elif "ok" in user_words or "okay" in user_words:
