@@ -51,8 +51,8 @@ def train_titan():
         data = [line.split("|") for line in lines]
 
 
-    X_train = np.array([item[0] for item in data if len(item) == 2])
-    y_train = np.array([item[1].strip() for item in data if len(item) == 2])
+    X_train = np.array([item[0].lower().strip() for item in data if len(item) == 2])
+    y_train = np.array([item[1].lower().strip() for item in data if len(item) == 2])
 
     # 3. Vectorize and train the model
     vectorizer = TfidfVectorizer(ngram_range=(1, 2), strip_accents='unicode', token_pattern=r'(?u)\b\w+\b' )
@@ -61,8 +61,6 @@ def train_titan():
     
     model_lr = LogisticRegression()
     model_lr.fit(X_train_vec, y_train)
-    
-
     
 
     bot_responses = {}
@@ -122,7 +120,6 @@ if user_text := st.chat_input("Talk to Titan"):
     else:
         # If it's a new sentence, let the machine learning model guess normally
         predicted_intent = intent_lr
-
 
 
     # BACKEND CHATBOT CODE         
