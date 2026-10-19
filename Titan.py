@@ -135,17 +135,30 @@ if user_text := st.chat_input("Talk to Titan"):
 
     # BACKEND CHATBOT CODE         
     with st.chat_message("assistant"):
+        # adding vader
+        sia = SentimentIntensityAnalyzer()
+        sentiment_scores = sia.polarity_scores(user_text)
+        compound_score = sentiment_scores['compound']
+
+
         if "hi!" in user_words or "hello" in user_words or "hi" in user_words:
             response = "Hello!"
 
-        # Titan's vectorized emotions response
+        # If Vader is confident that they are happy or excited
+        elif confidence <= 0.45 and compound_score >= 0.5:
+            response = bot_responses.get("excited", "That energy is awesome! What sounds like an amazing experience? Wow, have fun there!")
+
+        #
         elif confidence <= 0.45:
-            response = bot_responses["repeat"]
+            response = bot_responses.get("repeat", "I didn't quite catch that. Could you try rephrasing your message for me?")
+            
         
+        # 3. Regular high confidence ML paths
         elif confidence > 0.45:
+
             if predicted_intent == "sad":
-                response =bot_responses.get("sad", "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it.")
-        
+                response = bot_responses.get("sad", "I can tell you're feeling down. Remember, it's okay to have tough days. I'm here to listen and help you through it.")
+
             elif predicted_intent == "happy":
                 response = bot_responses.get("happy", "I'm glad to hear you're feeling happy! Keep that positive energy going!")
         
@@ -155,6 +168,29 @@ if user_text := st.chat_input("Talk to Titan"):
         
             elif predicted_intent == "angry":
                 response = bot_responses.get("angry", "I see you're angry, calm down and take a deep breath.")
+
+
+        # If the lr and knn models are confused but VADER detects a strong negative emotion
+            elif confidence <= 0.45:
+                # 1. Get VADER's individual emotional breakdowns
+                neg_intensity = sentiment_scores['neg']  
+                pos_intensity = sentiment_scores['pos']  
+
+                # 2. Check if VADER is genuinely detecting sadness/negativity
+                if neg_intensity > pos_intensity and neg_intensity > 0.25:
+                    # 3. Double-check with a quick keyword list to separate Sadness
+                    sad_keywords = ["sad", "down", "cry", "depressed", "lonely", "hurt", "blue", "unhappy"]
+                    
+                    if any(word in user_text.lower() for word in sad_keywords):
+                        response = bot_responses.get("sad", "I can tell you're feeling down. I'm here to listen.")
+                    else:
+                        # If it's negative but doesn't have sad words, it might be stress or anger
+                        response = "It sounds like you're dealing with some heavy emotions right now. Want to talk about it?"
+                else:
+                    # True fallback if it's completely neutral or confusing
+                    response = bot_responses.get("repeat", "I didn't quite catch that. Could you try rephrasing your message for me?")
+
+
         
             elif predicted_intent == "math": 
                 Math_vocab_keywords = np.array(["definition", "what is", "define", "mean", "explain", "difference", "concept"])
