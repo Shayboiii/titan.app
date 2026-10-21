@@ -1,7 +1,5 @@
 
 
-
-
 I am so sad|sad
 I feel completely down and hopeless|sad
 I am so drained|sad
@@ -232,5 +230,68 @@ This is the most spirited and joyful I have felt in weeks|excited
 I am so incredibly stoked for our upcoming holiday trip|excited
 I am feeling completely dynamic, passionate, and ready to go|excited
 
+i am hungry|hungry
+i want to eat something|hungry
+what should i eat|hungry
+im starving|hungry
+give me a healthy snack recommendation|hungry
+can you suggest a food option|hungry
+i need food to refuel|hungry
+what is a good snack right now|hungry
+healthy food ideas|hungry
+i want some food|hungry
+my stomach is growling|hungry
+i need to eat lunch|hungry
+im looking for a healthy snack|hungry
+what can i snack on|hungry
+i need some fuel for my workout|hungry
+give me something healthy to eat|hungry
+i am craving a snack|hungry
+what is a good food choice right now|hungry
+i want to eat clean food|hungry
+im so hungry right now|hungry
+suggest a good macro snack|hungry
+i need a clean snack option|hungry
+what should i eat for energy|hungry
+im ready for some food|hungry
+give me nutrition ideas|hungry
+i need a quick bite to eat|hungry
+what snack is good for math focus|hungry
+i want a healthy meal|hungry
+im looking for clean fuel|hungry
+what food keeps my energy steady|hungry
+i need to eat some nutrients|hungry
+
+i am so tired|tired
+i feel exhausted|tired
+im sleepy|tired
+i have no energy|tired
+i am drained from homework|tired
+can i go to sleep|tired
+im falling asleep at my desk|tired
+i need a nap|tired
+so low on energy today|tired
+i am fatigued|tired
+my brain is completely fried|tired
+i want to go to bed|tired
+im running on empty|tired
+i feel worn out|tired
+im too tired to do math|tired
+i have zero energy right now|tired
+im completely burned out|tired
+i feel sluggish today|tired
+i cant keep my eyes open|tired
+i need some rest|tired
+im exhausted from fitness working out|tired
+i feel wiped out|tired
+im so ready for sleep|tired
+my body feels so heavy and tired|tired
+i need a break to sleep|tired
+im losing concentration because im tired|tired
+i feel like collapsing into bed|tired
+im super drowsy right now|tired
+homework made me so sleepy|tired
+i just want to sleep for hours|tired
+im low on battery|tired
 
 
