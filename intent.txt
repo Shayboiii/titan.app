@@ -295,3 +295,34 @@ i just want to sleep for hours|tired
 im low on battery|tired
 
 
+i want to lose weight|weight
+how do i drop pounds|weight
+i feel fat|weight
+im trying to get skinny|weight
+how many calories should i eat|weight
+i want to bulk up|weight
+im on a strict diet|weight
+how do i burn fat fast|weight
+i want to shred for the summer|weight
+is being obese dangerous|weight
+how can i gain weight safely|weight
+im trying to lean out|weight
+what is a good weight loss diet|weight
+how do i track my calorie intake|weight
+i want to get rid of stomach fat|weight
+how do i build muscle and lose fat|weight
+im worried about my scale weight|weight
+how to fix my slow metabolism|weight
+what should my target weight be|weight
+how do i stop overeating on my diet|weight
+i want to change my body composition|weight
+how can i manage my weight better|weight
+im looking for a clean eating diet plan|weight
+how do i get a toned body|weight
+i want to lose inches off my waist|weight
+what is the best way to cut calories|weight
+how do i gain clean mass|weight
+im checking my weight on the scale|weight
+how do i stay consistent with my diet|weight
+i want to lower my body fat percentage|weight
+how to break through a weight loss plateau|weight
