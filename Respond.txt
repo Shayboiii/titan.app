@@ -9,3 +9,5 @@ angry|I see you're angry, calm down and take a deep breath.
 excited|That energy is awesome! What sounds like an amazing experience? Wow, have fun there!
 fitness|I see you're interested in fitness! Type your response in and let's get fit!
 math|I see you need help with math! What math concept are we learning about today?
+tired|I see you're tired try not using your phone 30 minutes before bed and then you'll wake up with pure energy!
+weight|Fitness is about feeling strong and healthy, not just a number on a scale! Focus on clean eating and consistent movement.
