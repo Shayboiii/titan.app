@@ -533,9 +533,8 @@ if user_text := st.chat_input("Talk to Titan"):
 
 
 
-                # Put this at the very bottom to catch anything that slips past your filters!
-        else:
-            response = bot_responses.get("generic", "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!")
+        if 'response' not in locals() or response is None:
+            response = "I'm not quite sure how to handle that phrase yet, but I'm here to help with math, fitness, or mental health!"
 
 
         # Saves history of chat
@@ -818,5 +817,3 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-
