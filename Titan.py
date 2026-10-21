@@ -170,9 +170,37 @@ if user_text := st.chat_input("Talk to Titan"):
 
 
             elif predicted_intent == "excited":
-                # This safely pulls your response text and handles both messages at once!
                 response = bot_responses.get("excited", "That energy is awesome! What sounds like an amazing experience? Wow, have fun there!")
 
+            elif predicted_intent == "hungry":
+                snack = random.choice(Healthy_food)
+        
+                # Macro facts lookup logic
+                if snack == "Hummus":
+                    macro_info = "packed with healthy plant-based protein and fiber to keep your energy steady!"
+                elif snack in ["Apple", "Banana", "Orange"]:
+                    macro_info = "full of natural carbohydrates and vitamins to give your muscles a fast, clean energy boost!"
+                elif snack == "Carrot":
+                    macro_info = "low in calories but packed with Vitamin A and antioxidants for excellent eye and skin health!"
+                elif snack == "Salad":
+                    macro_info = "loaded with essential micronutrients and hydration to help your body recover!"
+
+                else:
+                    
+                    macro_info = "packed with natural nutrients to fuel your brain and body!"
+                 
+                response = (
+                            f"How about eating some **{snack}**! It is amazing for you!\n\n"
+                            f"**Titan Macro Breakdown:** This snack is {macro_info}\n\n"
+                            "Eating clean fuels both your brain for math and your body for fitness. Let me know if you want another option!"
+
+                    )
+
+            elif predicted_intent == "tired":
+                response = bot_responses.get("tired", "I see you're tired try not using your phone 30 minutes before bed and then you'll wake up with pure energy!")
+
+            elif predicted_intent == "weight":
+                response = bot_responses.get("weight", "Fitness is about feeling strong and healthy, not just a number on a scale! Focus on clean eating and consistent movement.")
 
 
 
@@ -207,30 +235,6 @@ if user_text := st.chat_input("Talk to Titan"):
 
         elif "wow" in user_words:
             response = "Yeah I know right!"
-
-
-        elif predicted_intent == "hungry":
-            snack = random.choice(Healthy_food)
-    
-            # Macro facts lookup logic
-            if snack == "Hummus":
-                macro_info = "packed with healthy plant-based protein and fiber to keep your energy steady!"
-            elif snack in ["Apple", "Banana", "Orange"]:
-                macro_info = "full of natural carbohydrates and vitamins to give your muscles a fast, clean energy boost!"
-            elif snack == "Carrot":
-                macro_info = "low in calories but packed with Vitamin A and antioxidants for excellent eye and skin health!"
-            else:  # Salad
-                macro_info = "loaded with essential micronutrients and hydration to help your body recover!"
-        
-            response = (
-                f"How about eating some **{snack}**! It is amazing for you!\n\n"
-                f"**Titan Macro Breakdown:** This snack is {macro_info}\n\n"
-                "Eating clean fuels both your brain for math and your body for fitness. Let me know if you want another option!"
-    )
-
-
-        elif predicted_intent == "tired":
-            response = "Go to sleep don't use a phone 30 minutes before bed time."
 
 
         elif predicted_intent == "weight":
