@@ -55,7 +55,7 @@ def train_titan():
     y_train = np.array([item[1].lower().strip() for item in data if len(item) == 2])
 
     # 3. Vectorize and train the model
-    vectorizer = TfidfVectorizer(ngram_range=(1, 3),max_features=800, strip_accents='unicode', token_pattern=r'(?u)\b\w+\b' )
+    vectorizer = TfidfVectorizer(analyizer ='chr_wb' ngram_range=(3, 5),max_features=800, strip_accents='unicode', token_pattern=r'(?u)\b\w+\b' )
     X_train_vec = vectorizer.fit_transform(X_train)
 
     
