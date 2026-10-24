@@ -218,9 +218,14 @@ if user_text := st.chat_input("Talk to Titan"):
             elif neg_intensity > pos_intensity and neg_intensity > 0.25:
                     # 4. Double-check with a quick keyword list to separate Sadness
                     sad_keywords = ["sad", "down", "cry", "depressed", "lonely", "hurt", "blue", "unhappy"]
+                    angry_keywords = ["angry", "mad", "outraged", "furious", "pissed", "annoyed", "frustrated", "irritated"]
                     
                     if any(word in user_text.lower() for word in sad_keywords):
                         response = bot_responses.get("sad", "I can tell you're feeling down. I'm here to listen.")
+
+                    elif any(word in user_text.lower() for word in angry_keywords):
+                        response = bot_responses.get("angry", "I see you're angry, calm down and take a deep breath.")
+                    
                     else:
                         # If it's negative but doesn't have sad words, it catches stress or anger safely!
                         response = "It sounds like you're dealing with some heavy emotions right now. Want to talk about it?"
